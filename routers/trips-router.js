@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
     else res.status(500).json({ error: 'Could not get trip' })
 })
 
-router.post('/', async (req, res) => { //returns array with id
+router.post('/', authenticate, async (req, res) => {
     const trip = req.body;
     let user = await db.findById(trip.user_id)
 
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => { //returns array with id
     }
 })
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', authenticate, async(req, res) => {
     const {id} = req.params
     const changes = req.body;
 
@@ -60,7 +60,7 @@ router.put('/:id', async(req, res) => {
     else res.status(404).json({ error: 'That trip does not exist' })
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticate, async (req, res) => {
     const {id} = req.params
     let trip = await tripDb.findTripById(id)
     if (trip) {
