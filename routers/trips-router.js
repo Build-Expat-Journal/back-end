@@ -40,6 +40,22 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put('/:id', async(req, res) => {
+    const {id} = req.params
+    const changes = req.body;
+
+    let toUpdate = await tripDb.findTripById(id)
+    if (toUpdate) {
+        let updatedTrip = await tripDb.updateTrip(id, changes)
+        if (updatedTrip) {
+            let tripToReturn = await tripDb.findTripById(id)
+            res.status(200).json(tripToReturn)
+        } 
+        else res.status(500).json({ error: 'Could not update trip'})
+    }
+    else res.status(404).json({ error: 'That trip does not exist' })
+})
+
 
 
 module.exports = router;

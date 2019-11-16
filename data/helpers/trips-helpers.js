@@ -3,7 +3,8 @@ module.exports = {
     findTripsByUserId,
     findTrips,
     findTripById,
-    addTrip
+    addTrip,
+    updateTrip
 }
 
 function findTripsByUserId(user_id) {
@@ -22,4 +23,9 @@ async function findTripById(id) {
 
 async function addTrip(trip) {
     return db('trips').insert(trip).returning('id')
+}
+
+async function updateTrip(id, trip) {
+    return db('trips').update(trip)
+    .where({id})
 }
