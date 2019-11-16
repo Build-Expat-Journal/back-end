@@ -35,9 +35,7 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
-      filename: process.env.DATABASE_URL,
-      user: 'khrbgrybghtnho',
-      password: '7cf87ecb1d314ecce81deab2d69c81b1c4a45df7103b57b2fb0e584845dcd478',
+      filename: 'postgres://khrbgrybghtnho:7cf87ecb1d314ecce81deab2d69c81b1c4a45df7103b57b2fb0e584845dcd478@ec2-107-21-226-44.compute-1.amazonaws.com:5432/d8p5g78ugms2ma',
     },
     migrations: {
       directory: './data/migrations'
