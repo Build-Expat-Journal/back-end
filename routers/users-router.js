@@ -25,7 +25,7 @@ router.get('/:id', authenticate, async (req, res) => {
     let user = await db.findById(id)
 
     if (user) {
-        user.trips = await tripDb.findTripsByUser(id)
+        user.trips = await tripDb.findTripsByUserId(id)
         delete user.password;
         res.status(200).json(user)
     } else {
@@ -95,7 +95,10 @@ router.get('/:id/trips', async (req, res) => {
     const {id}= req.params;
     let user = await db.findById(id)
     let userTrips = await tripDb.findTripsByUserId(id)
-    if (user && userTrips) res.status(200).json(userTrips)
+    if (user && userTrips) {
+        if (!userTrips.length) res.status(404).json({ error: 'That user has no trips'})
+        else res.status(200).json(userTrips)
+    } else if (!user) res.status(404).json({ error: 'That user does not exist'})
     else res.status(500).json({ error: 'Could not get user trips'})
 })
 

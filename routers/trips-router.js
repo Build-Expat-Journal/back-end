@@ -27,13 +27,17 @@ router.get('/:id', async (req, res) => {
     else res.status(500).json({ error: 'Could not get trip' })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => { //returns array with id
     const trip = req.body;
     let user = await db.findById(trip.user_id)
 
     if (user) {
-        const addedTrip = await tripDb.addTrip(trip)
-        if (addedTrip) res.status(201).json(addedTrip)
+        const success = await tripDb.addTrip(trip)
+        if (success) {
+            let [id] = success
+            let addedTrip = await tripDb.findTripById(id)
+            res.status(201).json(addedTrip)
+        }
         else res.status(500).json({ error: 'Could not add trip'})
     } else {
         res.status(404).json({ error: 'That user_id does not exist' })
