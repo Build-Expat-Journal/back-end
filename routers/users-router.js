@@ -10,7 +10,10 @@ const validateUser = require('../authentication/validate-user')
 
 router.get('/', (req, res) => {
     db.find()
-    .then(users => res.status(200).json(users))
+    .then(users => {
+        users.forEach(u => delete u.password)
+        res.status(200).json(users)
+    })
     .catch(err => res.status(500).json({ error: 'Could not get users' }))
 })
 
@@ -18,7 +21,10 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const {id} = req.params;
     db.findById(id)
-    .then(user => res.status(200).json(user))
+    .then(user => {
+        delete user.password
+        res.status(200).json(user)
+        })
     .catch(err => res.status(500).json({ error: 'Could not get user' }))
 
 })
