@@ -23,7 +23,7 @@ async function findTripById(id) {
 }
 
 async function addTrip(trip) {
-    return db('trips').insert(trip).returning('id')
+    return db('trips').insert(trip, 'id').returning('id')
 }
 
 async function updateTrip(id, trip) {
