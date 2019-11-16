@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const getToken = require('../authentication/getToken')
 
 const validateUser = require('../authentication/validate-user')
+const authenticate = require('../authentication/authenticate-middleware')
 
 
 
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticate, async (req, res) => {
     const {id} = req.params;
     let user = await db.findById(id)
 
