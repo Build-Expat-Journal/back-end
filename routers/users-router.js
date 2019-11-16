@@ -1,4 +1,5 @@
 const db = require('../data/helpers/users-helpers')
+const tripDb = require('../data/helpers/trips-helpers')
 const router = require('express').Router()
 const bcrypt = require('bcryptjs');
 const getToken = require('../authentication/getToken')
@@ -18,15 +19,17 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     const {id} = req.params;
-    db.findById(id)
-    .then(user => {
-        delete user.password
-        res.status(200).json(user)
-        })
-    .catch(err => res.status(500).json({ error: 'Could not get user' }))
+    const user = await db.findById(id)
 
+    if (user) {
+        user.trips = await tripDb.findTripByUser(id)
+        delete user.password;
+        res.status(200).json(user)
+    } else {
+        res.status(500).json({ error: 'Could not get user' })
+    }
 })
 
 
