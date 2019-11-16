@@ -29,16 +29,16 @@ exports.up = function(knex) {
   .createTable('photos', tbl => {
       tbl.increments()
       tbl.integer('trip_id')
-        // .notNullable()
+        .notNullable()
         .references('id')
         .inTable('trips')
       tbl.integer('user_id')
-        // .notNullable()
+        .notNullable()
         .references('id')
         .inTable('users');
       tbl.string('img_caption')
       tbl.string('img_url')
-        // .notNullable()
+        .notNullable()
   })
 };
 
