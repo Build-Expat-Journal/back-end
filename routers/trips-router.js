@@ -56,6 +56,14 @@ router.put('/:id', async(req, res) => {
     else res.status(404).json({ error: 'That trip does not exist' })
 })
 
-
+router.delete('/:id', async (req, res) => {
+    const {id} = req.params
+    let trip = await tripDb.findTripById(id)
+    if (trip) {
+        let deleted = await tripDb.deleteTrip(id)
+        if (deleted) res.status(200).json({ message: `Deleted trip with id ${id}`})
+        else res.status(500).json({ error: 'Could not delete trip'})
+    } else res.status(404).json({ error: 'That trip does not exist'})
+})
 
 module.exports = router;
