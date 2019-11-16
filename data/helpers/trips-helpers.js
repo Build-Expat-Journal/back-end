@@ -1,9 +1,9 @@
 const db = require('../db-config')
 module.exports = {
-    findTripByUser,
+    findTripsByUser,
 }
 
-function findTripByUser(id) {
+function findTripsByUser(user_id) {
     return db('trips')
-    .where({id}, 'user_id')
+    .where({user_id})
 }

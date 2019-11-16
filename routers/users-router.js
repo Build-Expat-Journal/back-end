@@ -21,10 +21,10 @@ router.get('/', (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const {id} = req.params;
-    const user = await db.findById(id)
+    let user= await db.findById(id)
 
     if (user) {
-        user.trips = await tripDb.findTripByUser(id)
+        user.trips = await tripDb.findTripsByUser(id)
         delete user.password;
         res.status(200).json(user)
     } else {
