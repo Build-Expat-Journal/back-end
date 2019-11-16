@@ -90,6 +90,14 @@ router.post('/login', async (req, res) => {
       }
 })
 
+// get a user's trips by user id
+router.get('/:id/trips', async (req, res) => {
+    const {id}= req.params;
+    let user = await db.findById(id)
+    let userTrips = await tripDb.findTripsByUserId(id)
+    if (user && userTrips) res.status(200).json(userTrips)
+    else res.status(500).json({ error: 'Could not get user trips'})
+})
 
 
 

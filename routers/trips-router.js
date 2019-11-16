@@ -1,4 +1,4 @@
-const db = require('../data/helpers/trips-helpers')
+const db = require('../data/helpers/users-helpers')
 const tripDb = require('../data/helpers/trips-helpers')
 const router = require('express').Router()
 const bcrypt = require('bcryptjs');
@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     }
 })
 
+//get trip by trip id
 router.get('/:id', async (req, res) => {
     const {id} = req.params;
     let trip = await tripDb.findTripById(id)
@@ -25,5 +26,20 @@ router.get('/:id', async (req, res) => {
     else if (!res.body) res.status(404).json({ error: "That trip doesn't exist!"})
     else res.status(500).json({ error: 'Could not get trip' })
 })
+
+router.post('/', async (req, res) => {
+    const trip = req.body;
+    let user = await db.findById(trip.user_id)
+
+    if (user) {
+        const addedTrip = await tripDb.addTrip(trip)
+        if (addedTrip) res.status(201).json(addedTrip)
+        else res.status(500).json({ error: 'Could not add trip'})
+    } else {
+        res.status(404).json({ error: 'That user_id does not exist' })
+    }
+})
+
+
 
 module.exports = router;

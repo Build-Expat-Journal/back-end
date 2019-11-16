@@ -1,11 +1,12 @@
 const db = require('../db-config')
 module.exports = {
-    findTripsByUser,
+    findTripsByUserId,
     findTrips,
-    findTripById
+    findTripById,
+    addTrip
 }
 
-function findTripsByUser(user_id) {
+function findTripsByUserId(user_id) {
     return db('trips')
     .where({user_id})
 }
@@ -17,4 +18,8 @@ async function findTrips() {
 async function findTripById(id) {
     return trip = await db('trips').where({id})
     .first()
+}
+
+async function addTrip(trip) {
+    return db('trips').insert(trip).returning('id')
 }
