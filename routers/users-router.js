@@ -53,7 +53,31 @@ router.post('/register', async (req, res) => {
           errors: validateResult.errors
         });
       }
-    
+})
+
+router.post('/login', async (req, res) => {
+    let user = req.body
+    const validateResult = validateUser(user) 
+
+    if (validateResult.isSuccessful === true) {
+        let userToCheck = await db.findByUsername(user.username)
+        if (userToCheck && bcrypt.compareSync(user.password, userToCheck.password)) {
+            const token = getToken(user.username)
+            res.status(200).json({
+                message: `Welcome ${user.username}! have a token...`, 
+                token,
+                id: userToCheck.id
+            })
+        } else {
+            res.status(401).json({ error: 'Invalid credentials'})
+        }
+
+    } else {
+        res.status(400).json({
+          message: "Invalid information about the user, see errors for details",
+          errors: validateResult.errors
+        });
+      }
 })
 
 
