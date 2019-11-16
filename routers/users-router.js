@@ -1,5 +1,9 @@
 const db = require('../data/helpers/users-helpers')
 const router = require('express').Router()
+const bcrypt = require('bcryptjs');
+const getToken = require('../authentication/getToken')
+
+const validateUser = require('../authentication/validate-user')
 
 
 
@@ -20,16 +24,36 @@ router.get('/:id', (req, res) => {
 })
 
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     let user = req.body
-    db.addUser(user)
-    .then(user_id => {
-        const [id] = user_id;
-        db.findById(id)
-        .then(added => res.status(200).json(added))
-        .catch(err => console.log(err))
-    })
-    .catch(err => res.status(500).json({ error: 'Could not add user' }))
+
+    const validateResult = validateUser(user)
+    if (validateResult.isSuccessful === true) {
+        const hash = bcrypt.hashSync(user.password, 8)
+        user.password = hash
+
+        let success = await db.addUser(user)
+        if (success != -1) {
+            const token = getToken(user.username)
+            const [id] = success;
+            db.findById(id)
+                .then(added => res.status(201).json({
+                    message:`Thanks for registering, ${added.first_name}`, 
+                    token: token,
+                    id: id
+                }))
+                .catch(err => res.status(500).json({ error: 'Could not add user' }))
+        } else {
+            res.status(400).json({ error: 'That username is taken'})
+        }
+        
+    } else {
+        res.status(400).json({
+          message: "Invalid information about the user, see errors for details",
+          errors: validateResult.errors
+        });
+      }
+    
 })
 
 

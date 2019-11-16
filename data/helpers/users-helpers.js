@@ -3,6 +3,7 @@ const db = require('../db-config')
 module.exports = {
     find,
     findById,
+    findByUsername,
     addUser,
 }
 
@@ -16,6 +17,15 @@ function findById(id) {
     .first()
 }
 
-function addUser(user) {
-    return db('users').insert(user).returning('id')
+function findByUsername(username) {
+    return db('users')
+    .where({ username })
+    .first()
+}
+
+async function addUser(user) {
+    if(!user.username || !user.password) return false;
+    let taken = await findByUsername(user.username)
+    if (taken) return -1;
+    else return db('users').insert(user).returning('id')
 }
