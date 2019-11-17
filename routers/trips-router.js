@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const {id} = req.params;
     let trip = await tripDb.findTripById(id)
+    trip.photos = await photosDb.findPhotosByTripId(id)
     if (trip) res.status(200).json(trip)
     else if (!res.body) res.status(404).json({ error: "That trip doesn't exist!"})
     else res.status(500).json({ error: 'Could not get trip' })
