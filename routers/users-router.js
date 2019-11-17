@@ -1,5 +1,6 @@
 const db = require('../data/helpers/users-helpers')
 const tripDb = require('../data/helpers/trips-helpers')
+const photosDb = require('../data/helpers/photos-helpers')
 const router = require('express').Router()
 const bcrypt = require('bcryptjs');
 const getToken = require('../authentication/getToken')
@@ -97,7 +98,16 @@ router.get('/:id/trips', async (req, res) => {
     let userTrips = await tripDb.findTripsByUserId(id)
     if (user && userTrips) {
         if (!userTrips.length) res.status(404).json({ error: 'That user has no trips'})
-        else res.status(200).json(userTrips)
+        else {
+                userTrips.map(async t => { // attaches photos array to trips
+                    try {
+                        t.photos = await photosDb.findPhotosByTripId(t.id)
+                    return res.status(200).json(userTrips)
+                    } catch (err) {
+                        console.log(err)
+                    } 
+                })
+            } 
     } else if (!user) res.status(404).json({ error: 'That user does not exist'})
     else res.status(500).json({ error: 'Could not get user trips'})
 })
