@@ -53,8 +53,7 @@ router.post('/login', (req, res)=> {
 function getJwtToken(username){
     //'encryption' thing
     const payload = {
-        username, 
-        role: 'user',
+        username
     };
 
     const secret = process.env.JWT_SECRET || 'Speak your wisdom.';
