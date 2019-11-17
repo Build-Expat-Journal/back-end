@@ -2,6 +2,7 @@ const photosDb = require('../data/helpers/photos-helpers')
 const tripDb = require('../data/helpers/trips-helpers')
 const usersDb = require('../data/helpers/users-helpers')
 const router = require('express').Router()
+const validatePhoto = require('../authentication/validate-photo')
 
 
 
@@ -21,7 +22,7 @@ router.get('/:id', async(req, res) => {
 })
 
 // add a photo 
-router.post('/', async (req, res) => {
+router.post('/', validatePhoto, async (req, res) => {
     const photo = req.body;
     const {trip_id} = req.body;
     const {user_id} = req.body
@@ -29,8 +30,8 @@ router.post('/', async (req, res) => {
     if (user) {
         let trip = await tripDb.findTripById(trip_id)
             if (trip.user_id === user_id) {
-            let photoAdded = await photosDb.addPhoto(photo)
-                if (photoAdded) {
+            let photoAdded = await photosDb.addPhoto(photo) // photoAdded = [photo_id]
+                if (trip.id === trip_id) {
                     res.status(201).json(trip)
                 } else res.status(500).json({ error: 'Failed to add trip'})
             } else if (trip.user_id !== user_id) {

@@ -25,10 +25,11 @@ async function findPhoto(id) {
     }
 }
 
-function addPhoto(photo) {
+async function addPhoto(photo) {
     return db('photos').insert(photo, 'id').returning('id')
 }
 
 function deletePhoto(id) {
     return db('photos').del().where({id})
 }
+
