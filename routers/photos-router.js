@@ -30,7 +30,20 @@ router.post('/', async (req, res) => {
     } else {
         res.status(500).json({ error: 'Could not find user'})
     }
-    
+})
+
+// delete a photo 
+
+router.delete('/:id', async (req, res) => {
+    const {id} = req.params;
+    let photo = await photosDb.findPhoto(id)
+    if (photo === -1) res.status(404).json({ error: 'That photo does not exist' })
+    else if  (photo) {
+        let deleted = photosDb.deletePhoto(id)
+        if (deleted) res.status(200).json({ message: `Photo ${id} successfully deleted`})
+        else res.status(500).json({ error: 'Failed to delete photo' })
+    }
+    else res.status(500).json({ error: 'Could not find that photo'})
 })
 
 module.exports = router;
