@@ -1,10 +1,7 @@
 const db = require('../data/helpers/users-helpers')
 const tripDb = require('../data/helpers/trips-helpers')
+const photosDb = require('../data/helpers/photos-helpers')
 const router = require('express').Router()
-const bcrypt = require('bcryptjs');
-const getToken = require('../authentication/getToken')
-
-const validateUser = require('../authentication/validate-user')
 const authenticate = require('../authentication/authenticate-middleware')
 
 
@@ -25,6 +22,33 @@ router.get('/:id', async (req, res) => {
     if (trip) res.status(200).json(trip)
     else if (!res.body) res.status(404).json({ error: "That trip doesn't exist!"})
     else res.status(500).json({ error: 'Could not get trip' })
+})
+
+// get PHOTOS of a trip by trip id 
+router.get('/:id/photos', async (req, res) => {
+    const  { id } = req.params;
+    let tripFound = await tripDb.findTripById(id)
+    if (tripFound) {
+        let photos = await photosDb.findPhotosByTripId(id);
+        if (photos) {
+            if (photos.length) {
+            res.status(200).json(photos)
+            } else {
+            res.status(404).json({ error: 'This trip has no photos'})
+            }
+        } else {
+        res.status(500).json({ error: 'Could not get photos'})
+    }
+
+    } else {
+        res.status(404).json({ error: 'Could not find that trip' })
+    }
+    
+    
+    // photosDb.findPhotosByTripId(id)
+    // .then(photos => res.status(200).json(photos))
+    // .catch(err => res.status(500).json({ error: 'Could not get photos'}))
+
 })
 
 router.post('/', authenticate, async (req, res) => {
