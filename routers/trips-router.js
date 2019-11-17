@@ -3,7 +3,7 @@ const tripDb = require('../data/helpers/trips-helpers')
 const photosDb = require('../data/helpers/photos-helpers')
 const router = require('express').Router()
 const authenticate = require('../authentication/authenticate-middleware')
-
+const validateTrip = require('../authentication/validate-trip')
 
 // get array of all trips
 router.get('/', async (req, res) => {
@@ -46,7 +46,7 @@ router.get('/:id/photos', async (req, res) => {
     }
 })
 
-router.post('/', authenticate, async (req, res) => {
+router.post('/', validateTrip, authenticate, async (req, res) => {
     const trip = req.body;
     let user = await db.findById(trip.user_id)
 
