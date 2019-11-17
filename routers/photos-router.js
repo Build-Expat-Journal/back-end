@@ -3,6 +3,14 @@ const tripDb = require('../data/helpers/trips-helpers')
 const usersDb = require('../data/helpers/users-helpers')
 const router = require('express').Router()
 
+
+
+router.get('/', async (req, res) => {
+    let photos = await photosDb.findPhotos()
+    if (!photos.length) res.status(404).json({ message: 'No photos found!'})
+    else if (photos) res.status(200).json(photos)
+    else res.status(500).json({ error: 'Could not get photos' })
+})
 // get an individual photos
 router.get('/:id', async(req, res) => {
     const {id} = req.params;

@@ -5,6 +5,11 @@ module.exports = {
     findPhoto,
     addPhoto,
     deletePhoto,
+    findPhotos
+}
+
+function findPhotos() {
+    return db('photos')
 }
 
 function findPhotosByTripId(trip_id) {
