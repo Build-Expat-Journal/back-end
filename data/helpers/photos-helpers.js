@@ -3,6 +3,7 @@ const db = require('../db-config')
 module.exports = {
     findPhotosByTripId,
     findPhoto,
+    addPhoto
 }
 
 function findPhotosByTripId(trip_id) {
@@ -16,4 +17,8 @@ async function findPhoto(id) {
     } else {
         return -1
     }
+}
+
+function addPhoto(photo) {
+    return db('photos').insert(photo, 'id').returning('id')
 }
