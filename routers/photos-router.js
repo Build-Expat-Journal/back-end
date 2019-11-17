@@ -47,7 +47,7 @@ router.delete('/:id', async (req, res) => {
     let photo = await photosDb.findPhoto(id)
     if (photo === -1) res.status(404).json({ error: 'That photo does not exist' })
     else if  (photo) {
-        let deleted = photosDb.deletePhoto(id)
+        let deleted = await photosDb.deletePhoto(id)
         if (deleted) res.status(200).json({ message: `Photo ${id} successfully deleted`})
         else res.status(500).json({ error: 'Failed to delete photo' })
     }
