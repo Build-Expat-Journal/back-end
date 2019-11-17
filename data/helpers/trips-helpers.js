@@ -18,8 +18,10 @@ async function findTrips() {
 }
 
 async function findTripById(id) {
-    return trip = await db('trips').where({id})
+    let trip = await db('trips').where({id})
     .first()
+    if (trip) return trip;
+    else return -1
 }
 
 async function addTrip(trip) {

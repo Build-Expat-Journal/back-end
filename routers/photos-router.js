@@ -28,10 +28,13 @@ router.post('/', async (req, res) => {
     let user = await usersDb.findById(user_id)
     if (user) {
         let trip = await tripDb.findTripById(trip_id)
-            if (trip) {
+            if (trip.user_id === user_id) {
             let photoAdded = await photosDb.addPhoto(photo)
-                if (photoAdded) res.status(201).json(photoAdded)
-                else res.status(500).json({ error: 'Failed to add trip'})
+                if (photoAdded) {
+                    res.status(201).json(trip)
+                } else res.status(500).json({ error: 'Failed to add trip'})
+            } else if (trip.user_id !== user_id) {
+                res.status(400).json({ error: 'Invalid user and trip combination'})
             } else {
             res.status(404).json({ error: 'Could not find that trip'})
         }
