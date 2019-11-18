@@ -3,6 +3,8 @@
 
 BASE URL: https://bw-expat-journal-ls.herokuapp.com/api/
 
+postgres database deployed on heroku
+
 
 === REGISTER ===
 
