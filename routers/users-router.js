@@ -35,16 +35,16 @@ router.get('/:id', authenticate, async (req, res) => {
 })
 
 
-router.post('/register', async (req, res) => {
+router.post('/register', validateUser, async (req, res) => {
     let user = req.body
 
-    const validateResult = validateUser(user)
-    if (validateResult.isSuccessful === true) {
+    // const validateResult = validateUser(user)
+    // if (validateResult.isSuccessful === true) {
         const hash = bcrypt.hashSync(user.password, 8)
         user.password = hash
 
         let success = await db.addUser(user)
-        if (success != -1) {
+        if (success) {
             const token = getToken(user.username)
             const [id] = success;
             db.findById(id)
@@ -58,12 +58,12 @@ router.post('/register', async (req, res) => {
             res.status(400).json({ error: 'That username is taken'})
         }
         
-    } else {
-        res.status(400).json({
-          message: "Invalid information about the user, see errors for details",
-          errors: validateResult.errors
-        });
-      }
+    // } else {
+    //     res.status(400).json({
+    //       message: "Invalid information about the user, see errors for details",
+    //       errors: validateResult.errors
+    //     });
+    //   }
 })
 
 router.post('/login', async (req, res) => {

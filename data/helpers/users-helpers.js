@@ -24,8 +24,8 @@ function findByUsername(username) {
 }
 
 async function addUser(user) {
-    if(!user.username || !user.password) return false;
-    let taken = await findByUsername(user.username)
-    if (taken) return -1;
-    else return db('users').insert(user, 'id').returning('id')
+    // if(!user.username || !user.password) return false;
+    // let taken = await findByUsername(user.username)
+    // if (taken) return -1;
+    return db('users').insert(user, 'id')
 }

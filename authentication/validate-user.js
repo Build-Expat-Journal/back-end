@@ -3,17 +3,18 @@ const db = require('../data/helpers/users-helpers')
 module.exports = validateUser;
 
 
-function validateUser(user) {
-    let errors = []
+function validateUser(req, res, next) {
+    // let errors = []
 
-    // if (!user.username) {
-    //     errors.push('Please include a username')
-    // } else if (!user.password) {
-    //     errors.push('Please provide a password')
-    // }
-
-    return {
-        isSuccessful: !errors.length,
-        errors
+    if (!req.body.username) {
+        res.status(400).json('Please include a username')
+    } else if (!req.body.password) {
+        res.status(400).json('Please include a username')
+    } else {
+        next()
     }
+    // return {
+    //     isSuccessful: errors.length === 0,
+    //     errors
+    // }
 }
