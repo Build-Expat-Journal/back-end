@@ -12,13 +12,8 @@ function findPhotos() {
     return db('photos')
 }
 
-async function findPhotosByTripId(trip_id) {
-    let photos = await db('photos').where({ trip_id })
-    photos.map(p => {
-        p.trip_id = trip_id ? 1 : -1
-        return p
-    })
-
+function findPhotosByTripId(trip_id) {
+    return db('photos').where({ trip_id })
 }
 
 async function findPhoto(id) {
