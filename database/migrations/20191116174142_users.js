@@ -93,7 +93,8 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE');     
       tbl.string('image');
-       
+      tbl
+        .enum('posts', ['posts.*']) .references('id').inTable('posts')      
   })
 };
 
@@ -106,23 +107,3 @@ exports.down = function(knex) {
     .dropTableIfExists('countries')
     .dropTableIfExists('users');
 };
-
-/*
-select C.CategoryName as Category
-    ,count(*) as TotalP
-    , min(P.UnitPrice) as Cheapest
-    , max(P.UnitPrice) as Priciest
-from [Product] as P
-join Category as C on P.CategoryId = C.Id
-group by C.CategoryName
-order by C.CategoryName;
-*/
-
-/*
-SELECT * from Country WHERE Country.id = City.country_id
-
-SELECT *, country.name
-JOIN countries, country.id, cities.country_id 
-WHERE cities.country_id = id
-
-*/

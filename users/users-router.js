@@ -5,9 +5,8 @@ const restricted = require('../auth/authenticate-middleware.js');
 
 
 //GET
-
 //users
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   Users
   .findBy()
   .then(users => {
@@ -38,12 +37,14 @@ router.get('/:id', (req, res) => {
 
 //user's trips
 router.get('/:id/trips', (req, res) => {
+  id = req.params.id;
   db
-  .select('trips.title', 'countries.name as country', 'users.username', 'trips.image')
+  .select('trips.*', 'countries.name as country', 'users.username as posted by')
   .from('users')
   .join('trips', 'users.id', '=', 'trips.user_id')
   .join('countries', 'countries.id', '=', 'trips.country_id')
-  // .where('user_id', '=', 'users.id')
+  .leftJoin('posts', 'trips.id', '=', 'posts.trip_id')
+  .where('trips.user_id', '=', `${id}`)
   .then(trips => {
     res.status(200).json(trips)
   })
@@ -53,13 +54,14 @@ router.get('/:id/trips', (req, res) => {
     });
 });
 
-//user trip posts
+//user trip's posts
 router.get('/:id/trips/:id', (req, res) => {
+  let id=req.params.id
   db
-  .select('posts.title', 'trips.title ', 'posts.date', 'posts.content', 'posts.image')
+  .select('posts.*', 'trips.title as trip', )
   .from('trips')
   .join('posts', 'trips.id', '=', 'posts.trip_id')
-  // .where('trip_id', '=', 'id')
+  .where('trip_id', '=', `${id}`)
   .then(posts => {
     res.status(200).json(posts)
   })
@@ -72,7 +74,6 @@ router.get('/:id/trips/:id', (req, res) => {
 
 
 //POST
-
 //new trip
 router.post('/:id/trips', (req, res) => {
   const tripData = req.body;
