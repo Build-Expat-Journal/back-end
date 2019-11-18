@@ -13,7 +13,7 @@
     "url": "git+https://github.com/Build-Expat-Journal/back-end.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sandy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Build-Expat-Journal/back-end/issues"
@@ -32,8 +32,10 @@
     "sqlite3": "^4.1.0"
   },
   "devDependencies": {
+    "cross-env": "^6.0.3",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
   },
   "jest": {
     "testEnvironment": "node"
