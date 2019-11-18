@@ -99,7 +99,14 @@ router.get('/:id/trips', async (req, res) => {
     if (user && userTrips) {
         if (!userTrips.length) res.status(404).json({ error: 'That user has no trips'})
         else {
-            res.status(200).json(userTrips)
+            // userTrips.map(async t => {
+            //     t.photos = [];
+            //     trip_id = t.id
+            //     let photos = await photosDb.findPhotosByTripId(trip_id)
+            //     photos.map(p => t.photos.push(p))
+            //      return res.status(200).json(userTrips)
+            // }) 
+            return res.status(200).json(userTrips)
         }
     } else if (!user) res.status(404).json({ error: 'That user does not exist'})
     else res.status(500).json({ error: 'Could not get user trips'})
