@@ -8,7 +8,7 @@ postgres database deployed on heroku
 
 === REGISTER ===
 
-POST /register
+POST users/register
     - accepts a new user object
 
     {
@@ -29,7 +29,7 @@ POST /register
 
 === LOGIN ===
 
-POST /login
+POST users/login
     - accepts a credentials object
 
     {
