@@ -43,7 +43,7 @@ router.get('/:id/trips', (req, res) => {
   .from('users')
   .join('trips', 'users.id', '=', 'trips.user_id')
   .join('countries', 'countries.id', '=', 'trips.country_id')
-  .leftJoin('posts', 'trips.id', '=', 'posts.trip_id')
+  // .leftJoin('posts', 'trips.id', '=', 'posts.trip_id')
   .where('trips.user_id', '=', `${id}`)
   .then(trips => {
     res.status(200).json(trips)

@@ -40,7 +40,6 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('countries')
-        // .join('city', country.city_id', '=', 'cities.id')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
 
@@ -50,7 +49,6 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('cities')
-        // .join('country', 'city.country_id', '=', 'countries.id')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
   })
@@ -93,8 +91,17 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE');     
       tbl.string('image');
+      // tbl.enum('posts', ['id', 'title', 'date', 'trip_id', 'content', 'image']).increments();  
+      // tbl.enum('posts', [],{ useNative: true, existingType: true, enumName: 'posts', schemaName: 'posts' })
       tbl
-        .enum('posts', ['posts.*']) .references('id').inTable('posts')      
+        .integer('posts')
+        .unsigned()
+        .references('*')
+        .inTable('posts')
+        .where('psots.trip_id', '=', 'trips.id')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');  
+      
   })
 };
 

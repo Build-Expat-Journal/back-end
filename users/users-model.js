@@ -12,6 +12,8 @@ function find() {
   // return db('users').select('id', 'username');
   return db.select('*').from('users');
 
+
+
 }
 
 function findBy(filter) {

@@ -14,12 +14,14 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1475522003475-eb5f96f1f930?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
           posts: [
             {
-              title: 'TRIPS.JS', 
+              id: 1,
+              title: 'SoCal Vibes', 
               date: '2015-08-21', 
               trip_id: 1,
               content: 'The commercials did not lie. I swear everyone DOES surf, do yoga and eat healthy.'
             }, 
             {
+              id: 2,
               title: 'Oceanside Pier', 
               date: '2015-08-21', 
               trip_id: 1,
@@ -35,6 +37,7 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80',
           posts: [
             {
+              id: 1,
               title: 'The Perfect Acai', 
               date: '2017-04-02', 
               trip_id: 2, 
@@ -53,12 +56,14 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1572811298995-74b11ebea596?ixlib=rb-1.2.1&auto=format&fit=crop&w=1110&q=80',
           posts: [
             {
+              id: 1,
               title: 'German Auto Confress', 
               date: '2017-04-02', 
               trip_id: 3, 
               content: 'First day of the auto show started with beer.'
             },
             {
+              id: 2,
               title: '', 
               date: '2017-04-03', 
               trip_id: 3, 
@@ -75,6 +80,7 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1571037697753-e796f324bbd6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
           posts: [
             {
+              id: 1,
               title: 'Hyundai Auto Confress', 
               date: '2017-05-15', 
               trip_id: 4, 
@@ -88,7 +94,23 @@ exports.seed = function(knex) {
           user_id: 2, 
           country_id: 1,
           image: 'https://images.unsplash.com/photo-1512668023544-749964af467a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-          posts: [1, 2]
+          posts: [
+            {
+              id: 1,
+              title: '4x4 Mountain Test: Day 1', 
+              date: '2017-06-30', 
+              trip_id: 5, 
+              content: 'We start at the base of the mountain, five different trucks.'
+            },
+            {
+              id: 2,
+              title: '4x4 Mountain Test: Day 2', 
+              date: '2017-06-30', 
+              trip_id: 5, 
+              content: 'The second day we were faced with 3ft deep ruts, and the snow was coming down harder.',
+              image: 'https://images.unsplash.com/photo-1546998557-f4da4a981c78?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+            },
+          ]
         },
 
         //USER 3:
@@ -100,12 +122,14 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1536506720721-329ebf764c07?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=652&q=80',
           posts: [
             {
+              id: 1,
               title: 'So many beaches', 
               date: '2017-04-02', 
               trip_id: 6, 
               content: 'There is a reminiscent feeling of antiquity as I gaze upong the beaches and cliffs and retro sunglasses...'
             },
             {
+              id: 2,
               title: '', 
               date: '2017-04-02', 
               trip_id: 6, 
@@ -122,6 +146,7 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1485199433301-8b7102e86995?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1080&q=80',
           posts: [
             {
+              id: 1,
               title: '', 
               date: '2018-11-17', 
               trip_id: 7, 
@@ -138,12 +163,14 @@ exports.seed = function(knex) {
           image: 'https://images.unsplash.com/photo-1508642054-5e6cade8ff13?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1092&q=80',
           posts: [
             {
+              id: 1,
               title: 'Folk Art', 
               date: '2017-04-02', 
               trip_id: 8, 
               content: 'So down this little alley we came to a huge plaza of artists and vendors. Vibrant colors everywhere!'
             },
             {
+              id: 2,
               title: '', 
               date: '2017-04-02', 
               trip_id: 8, 
