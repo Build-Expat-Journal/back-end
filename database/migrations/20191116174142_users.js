@@ -11,6 +11,7 @@ exports.up = function(knex) {
       .notNullable()
       .unique();
     users.string('password', 128).notNullable();
+    users.string('profile_img');
   })
 
   .createTable('countries', tbl=> {
@@ -58,7 +59,7 @@ exports.up = function(knex) {
       tbl.increments('id').primary();
       tbl.string('title').notNullable();
       tbl.date('date');
-      tbl.timestamp('created_at', Date.now());
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl
         .integer('trip_id')
         .unsigned()
@@ -67,28 +68,32 @@ exports.up = function(knex) {
         .inTable('trips')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
+      tbl.string('content');
+      tbl.string('image');
   })
 
  .createTable('trips', tbl=> {
       tbl.increments('id').primary();
+      tbl.timestamp('created_at').defaultTo(knex.fn.now());
       tbl.string('title');
       tbl.date('from', 64);
       tbl.date('to', 64);   
       tbl
         .integer('user_id')
         .unsigned()
-        // .notNullable()
         .references('id')
         .inTable('users')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');      
       tbl
-        .integer('location_id')
+        .integer('country_id')
         .unsigned()
         .references('id')
-        .inTable('locations')
+        .inTable('countries')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');      
+        .onUpdate('CASCADE');     
+      tbl.string('image');
+       
   })
 };
 

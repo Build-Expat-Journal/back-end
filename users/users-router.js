@@ -9,6 +9,7 @@ const restricted = require('../auth/authenticate-middleware.js');
 //users
 router.get('/', (req, res) => {
   Users
+  .findBy()
   .then(users => {
     res.json(users);
   })
@@ -38,9 +39,11 @@ router.get('/:id', (req, res) => {
 //user's trips
 router.get('/:id/trips', (req, res) => {
   db
-  .select('trips.title as Trip', 'users.username as PostedBy')
+  .select('trips.title', 'countries.name as country', 'users.username', 'trips.image')
   .from('users')
   .join('trips', 'users.id', '=', 'trips.user_id')
+  .join('countries', 'countries.id', '=', 'trips.country_id')
+  // .where('user_id', '=', 'users.id')
   .then(trips => {
     res.status(200).json(trips)
   })
@@ -53,9 +56,10 @@ router.get('/:id/trips', (req, res) => {
 //user trip posts
 router.get('/:id/trips/:id', (req, res) => {
   db
-  .select('posts.title as Post', 'trips.title as Trip', 'posts.date as Date')
+  .select('posts.title', 'trips.title ', 'posts.date', 'posts.content', 'posts.image')
   .from('trips')
   .join('posts', 'trips.id', '=', 'posts.trip_id')
+  // .where('trip_id', '=', 'id')
   .then(posts => {
     res.status(200).json(posts)
   })
