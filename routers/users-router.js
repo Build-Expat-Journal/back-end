@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const getToken = require('../authentication/getToken')
 
 const validateUser = require('../authentication/validate-user')
+const validateUserLogin = require('../authentication/validate-user-login')
 const authenticate = require('../authentication/authenticate-middleware')
 
 
@@ -66,7 +67,7 @@ router.post('/register', validateUser, async (req, res) => {
     //   }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', validateUserLogin, async (req, res) => {
     let user = req.body
     // const validateResult = validateUser(user) 
 
