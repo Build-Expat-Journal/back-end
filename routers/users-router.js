@@ -68,9 +68,9 @@ router.post('/register', validateUser, async (req, res) => {
 
 router.post('/login', async (req, res) => {
     let user = req.body
-    const validateResult = validateUser(user) 
+    // const validateResult = validateUser(user) 
 
-    if (validateResult.isSuccessful === true) {
+    // if (validateResult.isSuccessful === true) {
         let userToCheck = await db.findByUsername(user.username)
         if (userToCheck && bcrypt.compareSync(user.password, userToCheck.password)) {
             const token = getToken(user.username)
@@ -83,12 +83,12 @@ router.post('/login', async (req, res) => {
             res.status(401).json({ error: 'Invalid credentials'})
         }
 
-    } else {
-        res.status(400).json({
-          message: "Invalid information about the user, see errors for details",
-          errors: validateResult.errors
-        });
-      }
+    // } else {
+    //     res.status(400).json({
+    //       message: "Invalid information about the user, see errors for details",
+    //       errors: validateResult.errors
+    //     });
+    //   }
 })
 
 // get a user's trips by user id
