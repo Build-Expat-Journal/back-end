@@ -5,10 +5,13 @@ module.exports = {
   find,
   findBy,
   findById,
+  findTripById,
 };
 
 function find() {
-  return db('users').select('id', 'username');
+  // return db('users').select('id', 'username');
+  return db.select('*').from('users');
+
 }
 
 function findBy(filter) {
@@ -23,6 +26,12 @@ async function add(user) {
 
 function findById(id) {
   return db('users')
+    .where({ id })
+    .first();
+}
+
+function findTripById(id) {
+  return db('trips')
     .where({ id })
     .first();
 }
