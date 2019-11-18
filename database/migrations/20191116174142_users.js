@@ -98,7 +98,7 @@ exports.up = function(knex) {
         .unsigned()
         .references('*')
         .inTable('posts')
-        .where('psots.trip_id', '=', 'trips.id')
+        .where('posts.trip_id', '=', 'trips.id')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');  
       
