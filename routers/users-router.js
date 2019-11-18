@@ -55,7 +55,7 @@ router.post('/register', validateUser, async (req, res) => {
                 }))
                 .catch(err => res.status(500).json({ error: 'Could not add user' }))
         } else {
-            res.status(400).json({ error: 'That username is taken'})
+            res.status(500).json({ error: 'error adding user'})
         }
         
     // } else {
