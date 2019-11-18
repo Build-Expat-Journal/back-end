@@ -1,10 +1,10 @@
 
-exports.seed = function(knex) {
-  return knex('cities').truncate()
-    .then(function () {
+exports.seed = function(knex, Promise) {
+  // return knex('cities').truncate()
+  //   .then(function () {
       return knex('cities').insert([
         {name: 'San Diego', country_id: 1},
-        {name: 'Pitsburg', country_id: 1}, //2
+        {name: 'Pittsburg', country_id: 1}, //2
         {name: 'Duluth', country_id: 1},
         {name: 'Savannah', country_id: 1}, //4
         {name: 'Mexico City', country_id: 2},
@@ -18,5 +18,5 @@ exports.seed = function(knex) {
         {name: 'Sydney', country_id: 10},
         {name: 'Paris', country_id: 11}, //14
       ]);
-    });
+    // });
 };

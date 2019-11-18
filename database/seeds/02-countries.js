@@ -1,8 +1,8 @@
 
 exports.seed = function(knex) {
-  return knex('locations').truncate()
+  return knex('countries').truncate()
     .then(function () {
-      return knex('locations').insert([
+      return knex('countries').insert([
         {name: 'United States'}, 
         {name: 'Mexico'}, //2
         {name: 'Brazil'},

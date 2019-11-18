@@ -33,9 +33,7 @@ router.post('/login', (req, res)=> {
     .first()
     .then(user=> {
         if (user && bcrypt.compareSync(password, user.password)){
-
             const token = getJwtToken(user.username);
-            
             req.body.username = user.username;
             res.status(200).json({
                 message: `Welcome back, ${user.username}.`,
@@ -51,17 +49,9 @@ router.post('/login', (req, res)=> {
 });
 
 function getJwtToken(username){
-    //'encryption' thing
-    const payload = {
-        username
-    };
-
-    const secret = process.env.JWT_SECRET || 'Speak your wisdom.';
-
-    const options = {
-        expiresIn: '1d'
-    };
-
+    const payload = {username};
+    const secret = process.env.JWT_SECRET || 'Travel the World';
+    const options = {expiresIn: '1d'};
     return jwt.sign(payload, secret, options);
 }
 

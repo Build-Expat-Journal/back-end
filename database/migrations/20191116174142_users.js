@@ -3,8 +3,9 @@ exports.up = function(knex) {
   return knex.schema
 
   .createTable('users', users=> {
-    users.increments();
+    users.increments('id').primary();
     users.string('name').notNullable();
+    users.string('current_location');
     users
       .string('username', 128)
       .notNullable()
@@ -12,8 +13,13 @@ exports.up = function(knex) {
     users.string('password', 128).notNullable();
   })
 
+  .createTable('countries', tbl=> {
+      tbl.increments('id').primary();
+      tbl.string('name').notNullable();
+  })
+
   .createTable('cities', tbl=> {
-      tbl.increments();
+      tbl.increments('id').primary();
       tbl.string('name').notNullable();
       tbl
         .integer('country_id')
@@ -25,22 +31,16 @@ exports.up = function(knex) {
         .onUpdate('CASCADE');
   })
 
-  .createTable('countries', tbl=> {
-      tbl.increments();
-      tbl.string('name').notNullable();
-      tbl
-
-  })
-
   .createTable('locations', tbl => {
-      tbl.increments();
+      tbl.increments('id').primary();
       tbl
         .integer('country_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('countries')
-        .onDelete('RESTRICT')
+        // .where('country.city_id', '=', 'cities.id')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
 
       tbl
@@ -49,12 +49,13 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('cities')
-        .onDelete('RESTRICT')
+        // .where('city.country_id', '=', 'countries.id')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
   })
 
   .createTable('posts', tbl=> {
-      tbl.increments();
+      tbl.increments('id').primary();
       tbl.string('title').notNullable();
       tbl.date('date');
       tbl.timestamp('created_at', Date.now());
@@ -64,12 +65,12 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('trips')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');
   })
 
  .createTable('trips', tbl=> {
-      tbl.increments();
+      tbl.increments('id').primary();
       tbl.string('title');
       tbl.date('from', 64).notNullable();
       tbl.date('to', 64);   
@@ -78,17 +79,16 @@ exports.up = function(knex) {
         .unsigned()
         .references('id')
         .inTable('users')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');      
       tbl
         .integer('location_id')
         .unsigned()
         .references('id')
         .inTable('locations')
-        .onDelete('RESTRICT')
+        .onDelete('CASCADE')
         .onUpdate('CASCADE');      
   })
-
 };
 
 exports.down = function(knex) {
@@ -96,8 +96,8 @@ exports.down = function(knex) {
     .dropTableIfExists('trips')
     .dropTableIfExists('posts')
     .dropTableIfExists('locations')
-    .dropTableIfExists('countries')
     .dropTableIfExists('cities')
+    .dropTableIfExists('countries')
     .dropTableIfExists('users');
 };
 
