@@ -78,7 +78,7 @@ POST /trips
     "user_id": 3 - required
  }
 
- PUT /trips/:id - token required 
+PUT /trips/:id - token required 
     - accepts a modified trip object
     - returns updated trip object
 
