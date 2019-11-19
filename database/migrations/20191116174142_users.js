@@ -6,8 +6,8 @@ exports.up = function(knex) {
     users.increments('id').primary();
     users.string('username', 128).notNullable().unique();
     users.string('password', 128).notNullable();
-    users.string('name');
-    users.string('email');
+    users.string('name').notNullable();
+    users.string('email').notNullable();
     users.string('current_location');
     users.string('profile_img');
   })

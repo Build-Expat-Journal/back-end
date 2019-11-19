@@ -12,30 +12,38 @@ _Currently deployed at:_ https://test-expat-db.herokuapp.com/
 
 GET:
 /api/users 
-returns all users 
+returns all `users`.
 
 /api/users/:id
-returns specific user
+returns specific `user`.
 
-/api/users/:id/trips
-returns a user's trips 
+/api/users/:id/posts
+returns all of a user's `posts`. 
 
-/api/users/:id/trips/:id
-returns posts in a user's trip 
+/api/users/:id/posts/:id
+returns a user's specific `posts`. 
 ---
 
 POST:
 /auth/register
-creates new `user`
+Creates new `user`.
 
 /auth/login
-login existing `user`
-
-/api/trips
-creates new `trip` 
+Login existing `user`.
 
 /api/posts
-adds new `post` under a `trip`
+Adds new `post`.
+---
+
+PUT:
+/:id/posts/:id
+Edits a specific `post`.
+---
+
+DELETE:
+/:id/posts/:id
+Removes a specific `post`.
+---
 
 
 
@@ -50,31 +58,19 @@ adds new `post` under a `trip`
 | location  | str   | no        |         |
 | profile_img| str  | no        |         |
 
-### Trips
-| Column    | Type  | Required  | Key     |
-|-----------|-------|-----------|---------|
-| id        | int   | yes       | primary |
-| created_at| int   | yes       | primary |
-| title     | str   | no        |         |
-| to(date)  | str   | no        |         |
-| from(date)| str   | no        |         |
-| user_id   | int   | yes       | foreign |
-| country_id| int   | yes       | foreign |
-| image     | str   | no        |         |
-| posts     | str   | no        |         |
-
 
 ### Posts
 | Column    | Type  | Required  | Key     |
 |-----------|-------|-----------|---------|
 | id        | int   | yes       | primary |
-| title     | str   | yes       |         |
-| date      | str   | no        |         |
-| created_at| int   | yes       |         |
+| title     | str   | no        |         |
+| date      | int   | yes       |         |
 | content   | str   | no        |         |
 | image     | str   | no        |         |
-| trip_id   | int   | yes       | foreign |
-| user_id   | int   |           | foreign |
+| user_id   | int   | yes       | foreign |
+| city_id   | int   | no        | foreign |
+| country_id| int   | no        | foreign |
+
 
 ### Country
 | Column    | Type  | Required  | Key     |
@@ -82,12 +78,14 @@ adds new `post` under a `trip`
 | id        | int   | yes       | primary |
 | name      | str   | yes       |         |
 
-### City
+
+### Cities
 | Column    | Type  | Required  | Key     |
 |-----------|-------|-----------|---------|
 | id        | int   | yes       | primary |
 | name      | str   | yes       |         |
 | country_id| int   | yes       | foreign |
+
 
 ### Location
 | Column    | Type  | Required  | Key     |
