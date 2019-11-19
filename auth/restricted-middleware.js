@@ -5,15 +5,16 @@ module.exports = (req, res, next)=> {
 
     if(token){
         const secret = process.env.JWT_SECRET || 'Travel the World';
+        
         jwt.verify(token, secret, (err, decodedToken)=> {
             if(err){
-                res.status(401).json({message: 'Error with the token.'})
+                res.status(401).json({message: 'Error with webtoken. Token malformed.'}, )
             } else {
                 res.decodedJwt = decodedToken;
-                next()
+                next();
             }
         });
     } else {
-        res.status(400).json({ message: 'Missing token.' });
+        res.status(400).json({ message: 'No credentials provided.' });
     }
 }

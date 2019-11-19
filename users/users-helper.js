@@ -1,3 +1,6 @@
+const Users = require('../users/users-model.js');
+
+
 module.exports={
     validateUser
 }
@@ -16,6 +19,15 @@ function validateUser(user){
     if (user.password === null){
         errors.push('Please create a password.')
     }
+
+    if (user.email === null){
+        errors.push('Please create a email.')
+    }
+
+    // Users.findBy(user.username) { 
+    //     if(Users.username){
+    //     errors.push('That username already exists.')
+    // }}
 
     return {
         isSuccessful: errors.length > 0 ? false:true,

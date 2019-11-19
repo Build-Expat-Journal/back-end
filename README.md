@@ -4,33 +4,94 @@
 User <== Trips <== Posts & Location*
 Location* <== City & Country 
 
-## CRUD Endpoints
-
-| Method | Endpoint | Details | Requires |
-
-| GET | /api/users | returns list of users | na |
-| GET | /api/users/:id | returns specific user | na |
-| GET | /api/users/:id/trips | returns a user's trips | na |
-| GET | /api/users/:id/trips/:id | returns posts in a user's trip | na |
-
-| POST | /auth/register |creates new `user` | `username`, `name`, `password`, `current_location`|
-| POST | /auth/login | login existing `user` | `username`, `password`|
-| POST | /api/trips | creates new `trip` | `title`, `country`, `user_id`|
-| POST | /api/posts | adds new `post` under a `trip` | `title`, `trip_id`|
+## Welcome 
+_Currently deployed at:_ https://test-expat-db.herokuapp.com/
 
 
-## All Available Data Paramaters
+## Routes
 
-*Required
+GET:
+/api/users 
+returns all users 
 
-Users: *id, name, current_location, username, password, profile_img
+/api/users/:id
+returns specific user
 
-Countries: id, name
+/api/users/:id/trips
+returns a user's trips 
 
-Cities: id, name, country_id
+/api/users/:id/trips/:id
+returns posts in a user's trip 
+---
 
-Locations: id, country_id, city_id
+POST:
+/auth/register
+creates new `user`
 
-Posts: id, title, date, created_at _(auto)_, trip_id, content, image
+/auth/login
+login existing `user`
 
-Trips: id, created_at _(auto)_, title, from (date), to (date), user_id, country_id, image, posts
+/api/trips
+creates new `trip` 
+
+/api/posts
+adds new `post` under a `trip`
+
+
+
+### Users
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| name      | str   | yes       |         |
+| username  | str   | yes       |         |
+| password  | str   | yes       |         |
+| email     | str   | yes       |         |
+| location  | str   | no        |         |
+| profile_img| str  | no        |         |
+
+### Trips
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| created_at| int   | yes       | primary |
+| title     | str   | no        |         |
+| to(date)  | str   | no        |         |
+| from(date)| str   | no        |         |
+| user_id   | int   | yes       | foreign |
+| country_id| int   | yes       | foreign |
+| image     | str   | no        |         |
+| posts     | str   | no        |         |
+
+
+### Posts
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| title     | str   | yes       |         |
+| date      | str   | no        |         |
+| created_at| int   | yes       |         |
+| content   | str   | no        |         |
+| image     | str   | no        |         |
+| trip_id   | int   | yes       | foreign |
+| user_id   | int   |           | foreign |
+
+### Country
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| name      | str   | yes       |         |
+
+### City
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| name      | str   | yes       |         |
+| country_id| int   | yes       | foreign |
+
+### Location
+| Column    | Type  | Required  | Key     |
+|-----------|-------|-----------|---------|
+| id        | int   | yes       | primary |
+| city_id   | int   | yes       | foreign |
+| country_id| int   | yes       | foreign |

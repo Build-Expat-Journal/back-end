@@ -3,15 +3,14 @@ exports.up = function(knex) {
   return knex.schema
 
   .createTable('users', users=> {
-    users.increments('id').primary();
-    users.string('name').notNullable();
-    users.string('current_location');
-    users
-      .string('username', 128)
-      .notNullable()
-      .unique();
+    users.increments().primary();
+    users.string('username', 128).notNullable().unique();
     users.string('password', 128).notNullable();
+    users.string('name');
+    users.string('email');
+    users.string('current_location');
     users.string('profile_img');
+    users.string('trips');  
   })
 
   .createTable('countries', tbl=> {
@@ -91,17 +90,8 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE');     
       tbl.string('image');
-      // tbl.enum('posts', ['id', 'title', 'date', 'trip_id', 'content', 'image']).increments();  
-      // tbl.enum('posts', [],{ useNative: true, existingType: true, enumName: 'posts', schemaName: 'posts' })
-      tbl
-        .integer('posts')
-        .unsigned()
-        .references('*')
-        .inTable('posts')
-        .where('posts.trip_id', '=', 'trips.id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');  
-      
+      tbl.enum('posts', [{id: `post.id`, title: 'post.title', content: 'post.content'}]);  
+      // tbl.enum('posts', { useNative: true, existingType: true, enumName: 'posts', schemaName: 'posts' })
   })
 };
 

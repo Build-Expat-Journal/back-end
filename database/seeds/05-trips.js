@@ -6,7 +6,8 @@ exports.seed = function(knex) {
 
         //USER 1:
         {
-          title: 'Sunny San Diego', 
+          id: 1,
+          title: 'Sunny in SoCal', 
           from: '2015-05-24', 
           to: '2019-11-16',
           user_id: 1, 
@@ -15,7 +16,7 @@ exports.seed = function(knex) {
           posts: [
             {
               id: 1,
-              title: 'SoCal Vibes', 
+              title: 'Cali Vibes', 
               date: '2015-08-21', 
               trip_id: 1,
               content: 'The commercials did not lie. I swear everyone DOES surf, do yoga and eat healthy.'
