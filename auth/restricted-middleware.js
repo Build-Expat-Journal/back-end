@@ -10,7 +10,7 @@ module.exports = (req, res, next)=> {
             if(err){
                 res.status(401).json({message: 'Error with webtoken. Token malformed.'}, )
             } else {
-                res.decodedJwt = decodedToken;
+                req.decodedJwt = decodedToken;
                 next();
             }
         });

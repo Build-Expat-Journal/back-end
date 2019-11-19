@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
     res.json(users);
   })
   .catch (err => {
-    res.status(500).json({ message: 'Failed to get users' });
+    res.status(500).json(err);
   });
 });
 
