@@ -82,7 +82,8 @@ router.put('/:id', authenticate, async(req, res) => {
 router.delete('/:id', authenticate, async (req, res) => {
     const {id} = req.params
     let trip = await tripDb.findTripById(id)
-    if (trip) {
+    if (trip !== -1) {
+        console.log(trip)
         let deleted = await tripDb.deleteTrip(id)
         console.log(deleted)
         if (deleted === 1) res.status(200).json({ message: `Deleted trip with id ${id}`})
