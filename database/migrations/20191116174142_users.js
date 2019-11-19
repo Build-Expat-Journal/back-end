@@ -3,17 +3,16 @@ exports.up = function(knex) {
   return knex.schema
 
   .createTable('users', users=> {
-    users.increments().primary();
+    users.increments('id').primary();
     users.string('username', 128).notNullable().unique();
     users.string('password', 128).notNullable();
     users.string('name');
     users.string('email');
     users.string('current_location');
     users.string('profile_img');
-    users.string('trips');  
   })
 
-  .createTable('countries', tbl=> {
+  .createTable('country', tbl=> {
       tbl.increments('id').primary();
       tbl.string('name').notNullable();
   })
@@ -26,7 +25,7 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('countries')
+        .inTable('country')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
   })
@@ -38,7 +37,7 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('countries')
+        .inTable('country')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
 
@@ -52,55 +51,43 @@ exports.up = function(knex) {
         .onUpdate('CASCADE');
   })
 
-  .createTable('posts', tbl=> {
+ .createTable('posts', tbl=> {
       tbl.increments('id').primary();
-      tbl.string('title').notNullable();
-      tbl.date('date');
-      tbl.timestamp('created_at').defaultTo(knex.fn.now());
-      tbl
-        .integer('trip_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('trips')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-      tbl.string('content');
-      tbl.string('image');
-  })
-
- .createTable('trips', tbl=> {
-      tbl.increments('id').primary();
-      tbl.timestamp('created_at').defaultTo(knex.fn.now());
+      tbl.timestamp('date').defaultTo(knex.fn.now());
       tbl.string('title');
-      tbl.date('from', 64);
-      tbl.date('to', 64);   
+      tbl.string('content');
       tbl
         .integer('user_id')
         .unsigned()
+        .notNullable()
         .references('id')
         .inTable('users')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');      
       tbl
-        .integer('country_id')
+        .integer('city_id')
         .unsigned()
         .references('id')
-        .inTable('countries')
+        .inTable('cities')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');     
+        .onUpdate('CASCADE');
+      tbl
+        .integer('country_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('country')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');      
       tbl.string('image');
-      tbl.enum('posts', [{id: `post.id`, title: 'post.title', content: 'post.content'}]);  
-      // tbl.enum('posts', { useNative: true, existingType: true, enumName: 'posts', schemaName: 'posts' })
   })
 };
 
 exports.down = function(knex) {
     return knex.schema
-    .dropTableIfExists('trips')
     .dropTableIfExists('posts')
     .dropTableIfExists('locations')
     .dropTableIfExists('cities')
-    .dropTableIfExists('countries')
+    .dropTableIfExists('country')
     .dropTableIfExists('users');
 };
