@@ -39,6 +39,8 @@ function findBy(filter) {
 function findById(id) {
   return db('users')
     .where({ id })
+    .join('posts', `${id}`, '=', 'posts.user_id')
+    .select('posts.*')
     .first();
 }
 
