@@ -5,7 +5,7 @@ const restricted = require('../auth/restricted-middleware.js');
 
 
 //GET
-router.get('/', (req, res) => {
+router.get('/', restricted, (req, res) => {
   Users
   .find()
   .then(users => {
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
   id = req.params.id;
 
   Users
@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', restricted, (req, res) => {
   id = req.params.id;
   db
   .select('posts.*' )
@@ -51,7 +51,7 @@ router.get('/:id/posts', (req, res) => {
     });
 });
 
-router.get('/:id/posts/:id', (req, res) => {
+router.get('/:id/posts/:id', restricted, (req, res) => {
   id=req.params.id;
   // postId=req.params.id;
   db
@@ -85,8 +85,20 @@ router.post('/:id/posts', restricted, (req, res) => {
 });
 
 
-
 //PUT
+router.put('/:id', restricted, (req, res) => {
+  const userData = req.body;
+  const id = req.params.id;
+
+  db('users').where({id}).update(userData)
+  .then(ids => {
+    res.status(201).json({ created: ids[0] });
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to edit user information.' });
+  });
+});
+
 router.put('/:id/posts/:id', restricted, (req, res) => {
   const postData = req.body;
   const id = req.params.id;
