@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const { id } = req.params;
+  id = req.params.id;
 
   Users
   .findById(id)
@@ -53,12 +53,12 @@ router.get('/:id/posts', (req, res) => {
 
 router.get('/:id/posts/:id', (req, res) => {
   id=req.params.id;
+  // postId=req.params.id;
   db
   .select('posts.*' )
-  .from('posts')
-  .join('users', 'posts.user_id', '=', 'users.id')
-  .where('posts.user_id', '=', `${id}`)
-  .where('posts.user_id', '=', `users.id`)
+  .from('users')
+  .join('posts', 'users.id', '=', 'posts.user_id')
+  // .where('posts.user_id', '=', `${id}`)
   .where('posts.id', '=', `${id}`)
   .then(posts => {
     res.status(200).json(posts)

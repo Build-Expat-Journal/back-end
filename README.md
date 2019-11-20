@@ -1,8 +1,6 @@
 # EXPAT JOURNY BACK-END
 *Sandra Kimball's Version*
 
-User <== Trips <== Posts & Location*
-Location* <== City & Country 
 
 ## Welcome 
 _Currently deployed at:_ https://test-expat-db.herokuapp.com/
@@ -10,7 +8,7 @@ _Currently deployed at:_ https://test-expat-db.herokuapp.com/
 
 ## Routes
 
-GET:
+GET: <br>
 /api/users 
 returns all `users`.
 
@@ -22,9 +20,9 @@ returns all of a user's `posts`.
 
 /api/users/:id/posts/:id
 returns a user's specific `posts`. 
----
 
-POST:
+
+POST:<br>
 /auth/register
 Creates new `user`.
 
@@ -33,17 +31,17 @@ Login existing `user`.
 
 /api/posts
 Adds new `post`.
----
 
-PUT:
+
+PUT:<br>
 /:id/posts/:id
 Edits a specific `post`.
 ---
 
-DELETE:
+DELETE:<br>
 /:id/posts/:id
 Removes a specific `post`.
----
+
 
 
 
