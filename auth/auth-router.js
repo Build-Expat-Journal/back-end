@@ -33,7 +33,7 @@ router.post('/login', (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = generateToken(user);
+        const token = generateToken(user.username);
         req.body.username = user.username;
 
         res.status(200).json({
@@ -49,8 +49,8 @@ router.post('/login', (req, res) => {
     });
 });
 
-function generateToken(user){
-  const payload = {subject: user.id, username: user.username, token};
+function generateToken(username){
+  const payload = {username, token};
   const secret = process.env.JWT_SECRET || 'Travel the World';
   const options = {expiresIn: '2d'};
   return jwt.sign(payload, secret, options);
