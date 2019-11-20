@@ -5,13 +5,11 @@ const {add, findBy} = require('../users/users-model.js');
 describe('auth model', function() {
     describe('register()', function() {
 
-        test('should return error for empty user registration', async function(){
+        test('should return error for empty registration', async function(){
             await add({});
-            const newUser = await db('users');
-            expect(users).toBe(!newUser) 
-            // request(router).post('/register').then(res=> {
-            //     expect(res.status).toBe(!newUser)
-            // })
+            request(router).post('/register').then(res=> {
+                expect(res.status).toBe(!newUser)
+            })
         });
 
         test('should register user', async function(){
@@ -28,19 +26,5 @@ describe('auth model', function() {
             })
         });
 
-        
-
     });
-
-    describe('login()', function() {
-
-        test('should login user', async function(){
-            
-        });
-        
-        test('should return token', async function(){
-            
-        });
-    });
-    
 });
