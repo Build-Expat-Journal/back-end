@@ -1,7 +1,6 @@
 const db = require('../database/dbConfig.js');
 const {add, findBy, remove} = require('./users-model.js');
 
-//5 Tests:
 
 describe('user model', function() {
 
@@ -16,28 +15,26 @@ describe('user model', function() {
                 password: 'Dobby', 
                 first_name: 'Dobby',
                 last_name: 'Socks',
-                email: 'Dobby',
-                country_id: 2,
+                email: 'Dobby'
             });
 
             const users = await db('users');
             expect(users).toHaveLength(1);
         });
 
-    //     test('should add the given user', async function(){
-    //         await add({
-    //             username:'Jimbo Slice',
-    //             password: 'Jimbo Slice', 
-    //             first_name: 'Jimbo',
-    //             last_name: 'Slice',
-    //             email: 'Jimbo Slice',
-    //             country_id: 4,
-    //     });
+        test('should add the given user', async function(){
+            await add({
+                username:'Jimbo Slice',
+                password: 'Jimbo Slice', 
+                first_name: 'Jimbo',
+                last_name: 'Slice',
+                email: 'Jimbo Slice'
+        });
 
-    //         const users = await db('users');
-    //         expect(users[0].name).toBe('Jimbo Slice');
-    //     });
-    // });
+            const users = await db('users');
+            expect(users[0].username).toBe('Jimbo Slice');
+        });
+    });
 
 //FIND
     // describe('findBy()', function() {
@@ -68,6 +65,6 @@ describe('user model', function() {
     //         expect(users).toHaveLength(0);
     //         expect(users).toBe(!'Dobby');
     //     });
-    });
+    // });
 
 });
