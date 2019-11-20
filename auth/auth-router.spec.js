@@ -4,28 +4,25 @@ const router = require('./auth-router.js');
 const {add, findBy} = require('../users/users-model.js');
 
 describe('auth model', function() {
-    describe('register()', function() {
+    describe('POST /register', function() {
 
         beforeEach(async () => {await db('users').truncate();})
 
-        test('should return error for empty registration', async function(){
-            return request(router).post('/register').then(res=> {
-                expect(res.status).toBe(400)
-            })
-        });
+        test('should respond with JSON', async function(){
+            request(router)
+                .post('/register')
+                .expect('Content-Type', /json/)
+                .send({username: 'Cat', 
+                    password: 'Cat', 
+                    first_name: 'Cat',
+                    last_name: 'Cat',
+                    email: 'Cat'})
+                .expect(200)
+                .end(function(err, res) {
+                if (err) throw err;
+            });
 
-        // test('should register user', async function(){
-        //     let newUser = await add({
-        //         username: 'Bo1', 
-        //         password: 'Bo', 
-        //         first_name: 'Bo',
-        //         last_name: 'Bo',
-        //         email: 'Bo2',
-        //     });
-        //     return request(router).post('/register').then(res=> {
-        //         expect(res.status).toBe(201)
-        //     })
-        // });
+        });
 
     });
 });
