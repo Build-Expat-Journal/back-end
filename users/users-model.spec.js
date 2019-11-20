@@ -36,35 +36,50 @@ describe('user model', function() {
         });
     });
 
-//FIND
-    // describe('findBy()', function() {
+// FIND
+    describe('findBy()', function() {
 
-    //     beforeEach(async () => {await db('users').truncate();})
+        beforeEach(async () => {await db('users').truncate();})
 
-    //     test('should find user by filter', async function(){
-    //         await add({name:'Dobby'});
-    //         await findBy('Dobby');
-
-    //         const user = await db('users');
-    //         expect(user).toHaveReturnedWith('Dobby');
-    //     });
-    // });
+        test('should find user by filter', async function(){
+            await add({
+                username: 'Deadpool', 
+                password: 'Deadpool', 
+                first_name: 'Ryan',
+                last_name: 'Reynolds',
+                email: 'Chimicangas'
+            });
+            const users = await db('users');
+            await findBy({username: 'Deadpool'});
+            expect(users).toHaveLength(1);
+            expect(users[0].first_name).toBe('Ryan');
+        });
+    });
 
 
 //REMOVE
-    // describe('remove()', function() {
+    describe('remove()', function() {
 
-    //     beforeEach(async () => {await db('users').truncate();})
+        beforeEach(async () => {await db('users').truncate();})
 
-    //     test('should remove a user', async function(){
-    //         await add({name:'Dobby'});
-    //         await remove({name:'Dobby'});
-    //         await findBy({Dobby});
+        test('should remove a user', async function(){
+            await add({
+                username: 'Cat', 
+                password: 'Cat', 
+                first_name: 'Cat',
+                last_name: 'Cat',
+                email: 'Cat'
+            });
 
-    //         const users = await db('users');
-    //         expect(users).toHaveLength(0);
-    //         expect(users).toBe(!'Dobby');
-    //     });
-    // });
+            const users = await db('users');
+            expect(users).toHaveLength(0);
+
+            await remove({username:'Cat'});
+            expect(users).toHaveLength(0);
+            
+            // await findBy({username: 'Cat'});
+            // expect(res.status).toBe(404);
+        });
+    });
 
 });
