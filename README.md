@@ -43,18 +43,24 @@ POST:<br>
     /auth/login
     Login existing `user`.
 
-    /api/posts
+    /api/users/:id/posts
     Adds new `post`.
 
 
 PUT:<br>
+    /:id
+    Edits a specific `user`'s information.
+    
     /:id/posts/:id
     Edits a specific `post`.
 
 
 DELETE:<br>
+    /:id
+    Deletes a specific `user`.
+
     /:id/posts/:id
-    Removes a specific `post`.
+    Deletes a user's specific `post`.
 
 
 ## Tables
