@@ -50,7 +50,7 @@ router.post('/login', (req, res) => {
 });
 
 function generateToken(username){
-  const payload = {username, token};
+  const payload = {username};
   const secret = process.env.JWT_SECRET || 'Travel the World';
   const options = {expiresIn: '2d'};
   return jwt.sign(payload, secret, options);
