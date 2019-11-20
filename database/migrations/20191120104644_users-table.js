@@ -48,14 +48,6 @@ exports.up = function(knex) {
       users.string('first_name').notNullable();
       users.string('last_name').notNullable();
       users.string('email').notNullable().unique();
-      users
-          .string('location_id')
-          .unsigned()
-          .notNullable()
-          .references('id')
-          .inTable('locations')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE');
       users.string('profile_img');
     })
   
