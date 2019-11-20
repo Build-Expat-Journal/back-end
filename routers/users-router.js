@@ -38,12 +38,9 @@ router.get('/:id', authenticate, async (req, res) => {
 
 router.post('/register', validateUser, async (req, res) => {
     let user = req.body
-
-    // const validateResult = validateUser(user)
-    // if (validateResult.isSuccessful === true) {
+    try {
         const hash = bcrypt.hashSync(user.password, 8)
         user.password = hash
-
         let success = await db.addUser(user)
         if (success) {
             const token = getToken(user.username)
@@ -55,16 +52,12 @@ router.post('/register', validateUser, async (req, res) => {
                     id: id
                 }))
                 .catch(err => res.status(500).json({ error: 'Could not add user' }))
-        } else {
-            res.status(500).json({ error: 'error adding user'})
         }
+    }
+    catch(err) {
+        res.status(500).json({ error: 'error adding user'})
+    }
         
-    // } else {
-    //     res.status(400).json({
-    //       message: "Invalid information about the user, see errors for details",
-    //       errors: validateResult.errors
-    //     });
-    //   }
 })
 
 router.post('/login', validateUserLogin, async (req, res) => {
