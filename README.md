@@ -60,33 +60,31 @@ DELETE:<br>
 ## Tables
 
 ### Users
-| Column    | Type  | Required  | Key     |
-|-----------|-------|-----------|---------|
-| id        | int   | yes       | primary |
-| name      | str   | yes       |         |
-| first_name| str   | yes       |         |
-| last_name | str   | yes       |         |
-| password  | str   | yes       |         |
-| email     | str   | yes       |         |
-| city_id   | str   | no        |         |
-| country_id| str   | yes       | foreign |
-| profile_img| str  | no        | foreign |
+| Column    | Type  | Required  | Key     | Unique  |
+|-----------|-------|-----------|---------|---------|
+| id        | int   | yes       | primary |         |
+| username  | str   | yes       |         | Yes     |
+| first_name| str   | yes       |         |         |
+| last_name | str   | yes       |         |         |
+| password  | str   | yes       |         |         |
+| email     | str   | yes       |         | Yes     |
+| city_id   | str   |           |         |         |
+| profile_img| str  |           | foreign |         |
 
-city_id REFERENCES id IN TABLE cities </br>
-country_id REFERENCES id IN TABLE country
+city_id REFERENCES id IN TABLE cities 
 
 
 ### Posts
 | Column    | Type  | Required  | Key     |
 |-----------|-------|-----------|---------|
 | id        | int   | yes       | primary |
-| title     | str   | no        |         |
+| title     | str   |           |         |
 | date      | int   | yes       |         |
-| content   | str   | no        |         |
-| image     | str   | no        |         |
+| content   | str   |           |         |
+| image     | str   |           |         |
 | user_id   | int   | yes       | foreign |
-| city_id   | int   | no        | foreign |
-| country_id| int   | no        | foreign |
+| city_id   | int   |           | foreign |
+| country_id| int   |           | foreign |
 
 city_id REFERENCES id IN TABLE cities </br>
 country_id REFERENCES id IN TABLE country </br>

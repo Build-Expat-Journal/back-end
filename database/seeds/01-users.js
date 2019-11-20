@@ -10,7 +10,6 @@ exports.seed = function(knex) {
           password: 'user', 
           email: 'user@example.com',
           city_id: 1,
-          country_id: 1, 
           profile_img: 'https://cdn.stocksnap.io/img-thumbs/960w/VZTYVVUYZB.jpg',
         },
 
@@ -21,8 +20,7 @@ exports.seed = function(knex) {
           username: 'gunter', 
           email: 'gunter_auto@gmail.com',
           password: 'gunter', 
-          city_id: 10,
-          country_id: 7, 
+          city_id: 10, 
           profile_img: 'https://cdn.stocksnap.io/img-thumbs/960w/OSICAYZDWA.jpg'
         },
         {
@@ -31,7 +29,7 @@ exports.seed = function(knex) {
           username: 'lola', 
           email: 'lolarose@roseblog.com',
           password: 'lola', 
-          country_id: 1, 
+          city_id: 7, 
           profile_img: 'https://images.unsplash.com/photo-1466838931486-92f3b5ff31a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1187&q=80'
         },
       ]);

@@ -47,23 +47,15 @@ exports.up = function(knex) {
     users.string('password', 128).notNullable();
     users.string('first_name').notNullable();
     users.string('last_name').notNullable();
-    users.string('email').notNullable();
-    users
-        .integer('country_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('country')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+    users.string('email').notNullable().unique();
     users
         .string('city_id')
         .unsigned()
         .notNullable()
         .references('id')
         .inTable('cities')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        .onDelete('SET NULL')
+        .onUpdate('SET NULL');
     users.string('profile_img');
   })
 
@@ -86,15 +78,7 @@ exports.up = function(knex) {
         .references('id')
         .inTable('cities')
         .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-      tbl
-        .integer('country_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('country')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');      
+        .onUpdate('CASCADE');    
       tbl.string('image');
   })
 };
