@@ -49,11 +49,11 @@ exports.up = function(knex) {
       users.string('last_name').notNullable();
       users.string('email').notNullable().unique();
       users
-          .string('city_id')
+          .string('location_id')
           .unsigned()
           .notNullable()
           .references('id')
-          .inTable('cities')
+          .inTable('locations')
           .onDelete('CASCADE')
           .onUpdate('CASCADE');
       users.string('profile_img');
