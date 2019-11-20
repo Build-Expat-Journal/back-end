@@ -12,7 +12,7 @@ describe('user model', function() {
             await insert({name:'Dobby'});
 
             const users = await db('users');
-            expect(users).toHaveLength();
+            expect(users).toHaveLength(1);
         });
 
         test('should insert the given user', async function(){

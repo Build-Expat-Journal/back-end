@@ -15,8 +15,8 @@ describe('server', function(){
         });
 
 
-        test('should get jokes', function(){
-            return request(server).get('/jokes').then(res=>{
+        test('should get users', function(){
+            return request(server).get('/api/users').then(res=>{
                 expect(res.body).toBeDefined;
             })
         });

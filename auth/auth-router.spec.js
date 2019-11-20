@@ -1,5 +1,5 @@
 const db = require('../database/dbConfig.js');
-const {insert} = require('./auth-model.js');
+const {insert} = require('./auth-router.js');
 
 describe('auth model', function() {
     describe('insert()', function() {
@@ -9,10 +9,6 @@ describe('auth model', function() {
         })
 
         test('should return token', async function(){
-            
-        });
-
-        test('should pass token', async function(){
             
         });
 

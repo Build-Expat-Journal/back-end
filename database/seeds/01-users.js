@@ -4,29 +4,34 @@ exports.seed = function(knex) {
     .then(function () {
       return knex('users').insert([
         {
-          name: 'user', 
+          first_name: 'user', 
+          last_name: 'user', 
           username: 'user', 
           password: 'user', 
           email: 'user@example.com',
-          current_location: 'California', 
+          city_id: 1,
+          country_id: 1, 
           profile_img: 'https://cdn.stocksnap.io/img-thumbs/960w/VZTYVVUYZB.jpg',
         },
 
 
         {
-          name: 'Gunter', 
+          first_name: 'Gunter', 
+          last_name: 'Grimwold', 
           username: 'gunter', 
           email: 'gunter_auto@gmail.com',
           password: 'gunter', 
-          current_location: 'Iceland', 
+          city_id: 10,
+          country_id: 7, 
           profile_img: 'https://cdn.stocksnap.io/img-thumbs/960w/OSICAYZDWA.jpg'
         },
         {
-          name: 'Lola', 
+          first_name: 'Lola', 
+          last_name: 'Lily', 
           username: 'lola', 
           email: 'lolarose@roseblog.com',
           password: 'lola', 
-          current_location: 'Nápoles, Italia', 
+          country_id: 1, 
           profile_img: 'https://images.unsplash.com/photo-1466838931486-92f3b5ff31a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1187&q=80'
         },
       ]);
