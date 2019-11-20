@@ -84,7 +84,6 @@ city_id REFERENCES id IN TABLE cities
 | image     | str   |           |         |
 | user_id   | int   | yes       | foreign |
 | city_id   | int   |           | foreign |
-| country_id| int   |           | foreign |
 
 city_id REFERENCES id IN TABLE cities </br>
 country_id REFERENCES id IN TABLE country </br>

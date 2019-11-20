@@ -54,8 +54,8 @@ exports.up = function(knex) {
         .notNullable()
         .references('id')
         .inTable('cities')
-        .onDelete('SET NULL')
-        .onUpdate('SET NULL');
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
     users.string('profile_img');
   })
 
