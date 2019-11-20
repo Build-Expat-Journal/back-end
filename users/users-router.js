@@ -114,6 +114,18 @@ router.put('/:id/posts/:id', restricted, (req, res) => {
 
 
 //DELETE
+router.delete('/:id', restricted, (req, res) => {
+  const id = req.params.id;
+
+  db('users').where({id}).delete()
+  .then(ids => {
+    res.status(201).json({ created: ids[0] });
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to delete user.' });
+  });
+});
+
 router.delete('/:id/posts/:id', restricted, (req, res) => {
   const id = req.params.id;
 
@@ -122,7 +134,7 @@ router.delete('/:id/posts/:id', restricted, (req, res) => {
     res.status(201).json({ created: ids[0] });
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to edit post.' });
+    res.status(500).json({ message: 'Failed to delete post.' });
   });
 });
 

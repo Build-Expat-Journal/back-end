@@ -1,8 +1,9 @@
 const db = require('../database/dbConfig.js');
-const {add, findBy, remove} = require('./users-model.js');
+const {add, findBy, findById, remove} = require('./users-model.js');
 
 
 describe('user model', function() {
+    beforeEach(async () => {await db('users').truncate();})
 
 //ADD
     describe('add()', function() {
@@ -56,7 +57,6 @@ describe('user model', function() {
         });
     });
 
-
 //REMOVE
     describe('remove()', function() {
 
@@ -70,15 +70,18 @@ describe('user model', function() {
                 last_name: 'Cat',
                 email: 'Cat'
             });
-
             const users = await db('users');
             expect(users).toHaveLength(1);
 
-            await remove(1);
-            expect(users).toHaveLength(0);
+            await findById(1);
+            expect(users[0].username).toBe('Cat');
+            expect(users[0].id).toBe(1);
+
+            // await remove(1);
+            // expect(users).toHaveLength(0);
             
-            await findBy({username: 'Cat'});
-            expect(res.status).toBe(404);
+            // await findBy({username: 'Cat'});
+            // expect(res.status).toBe(404);
         });
     });
 
