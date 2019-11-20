@@ -55,12 +55,12 @@ function findPostById(id) {
 function remove(id) {
   return db('users')
     .where({ id })
-    .del();
+    .delete();
 }
 
 function removePost(id) {
   return db('posts')
     .join('users', 'posts.user_id', '=', 'users.id')
     .where({ id })
-    .del();
+    .delete();
 }

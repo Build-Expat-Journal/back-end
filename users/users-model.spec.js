@@ -72,13 +72,13 @@ describe('user model', function() {
             });
 
             const users = await db('users');
-            expect(users).toHaveLength(0);
+            expect(users).toHaveLength(1);
 
-            await remove({username:'Cat'});
+            await remove(1);
             expect(users).toHaveLength(0);
             
-            // await findBy({username: 'Cat'});
-            // expect(res.status).toBe(404);
+            await findBy({username: 'Cat'});
+            expect(res.status).toBe(404);
         });
     });
 
