@@ -9,8 +9,8 @@ describe('users router', () => {
     })
 
     it('GET /users/id returns a 200', async () => {
-        let id = 4
-        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRvbV9zaW1wc29uNyIsImlhdCI6MTU3NDE4MzY0NywiZXhwIjoxNTc0MjAxNjQ3fQ.UHpFjcdbbJU9GKyod5kwIZVxiJVe2DQjNL7bGGTuHxc'
+        let id = 5
+        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvcmVuem9fdGVzdDEiLCJpYXQiOjE1NzQyNzAxMzMsImV4cCI6MTU3NDI4ODEzM30.A9LHc3icvxqtNQAY81znHC9xHf9xgcfwQbo3RXZtdJY'
         let res = await request(server)
                     .get(`/api/users/${id}`)
                     .set('content-type', 'application/json')

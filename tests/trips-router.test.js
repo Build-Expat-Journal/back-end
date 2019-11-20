@@ -11,7 +11,7 @@ describe('trips router', () => {
     })
 
     test('POST /trips should return a 201 created', async () => {
-        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRvbV9zaW1wc29uNyIsImlhdCI6MTU3NDE4MzY0NywiZXhwIjoxNTc0MjAxNjQ3fQ.UHpFjcdbbJU9GKyod5kwIZVxiJVe2DQjNL7bGGTuHxc'
+        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvcmVuem9fdGVzdDEiLCJpYXQiOjE1NzQyNzAxMzMsImV4cCI6MTU3NDI4ODEzM30.A9LHc3icvxqtNQAY81znHC9xHf9xgcfwQbo3RXZtdJY'
         let res = await request(server)
         .post('/api/trips')
         .set('content-type', 'application/json')
