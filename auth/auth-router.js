@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
           res.status(201).json(saved);
         })
         .catch(error => {
-          res.status(500).json(error);
+          res.status(500).json({error: 'Unable to register.'});
       });
     } else {
       res.status(400).json({message:'Error:', err: validateResults.errors})
@@ -41,7 +41,7 @@ router.post('/login', (req, res) => {
           token,
         });
       } else {
-        res.status(401).json({ message: 'Username or password is incorrect.' });
+        res.status(401).json({ error: 'Username or password is incorrect.' });
       }
     })
     .catch(error => {

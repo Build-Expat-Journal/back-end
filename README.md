@@ -14,7 +14,7 @@
 _Currently deployed at:_ https://test-expat-db.herokuapp.com/
 _Expat Journal Website:_ https://expatjournal.now.sh/
 
-This was a project designed to give a more porfessional platform to expats for their journeys.
+This was a project designed to serve as a professional platform to expats to log,blog, share and teach about their journeys and experiences, showcasing the world through their eyes. 
 
 This database is hosted on Heroku.
 
