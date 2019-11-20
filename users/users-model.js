@@ -2,15 +2,12 @@ const db = require('../database/dbConfig.js');
 
 module.exports = {
   add,
-  addTrip,
   addPost,
   find,
   findBy,
   findById,
-  findTripById,
   findPostById,
   remove,
-  removeTrip,
   removePost,
 };
 
@@ -21,18 +18,9 @@ async function add(user) {
   return findById(id);
 }
 
-async function addTrip(trip, user) {
-  const [id] = await db('trips')
-  .where('trip.user_id', '=', `${user.id}`)
-  .insert(trip, 'id');
-
-  return findTripById(id);
-}
-
-async function addPost(post, trips, user) {
+async function addPost(post, user) {
   const [id] = await db('posts')
-  .where('post.trip_id', '=', `${trips.id}`)
-  .where('trip.user_id', '=', `${user.id}`)
+  .where('post.user_id', '=', `${user.id}`)
   .insert(post, 'id');
 
   return findPostById(id);
@@ -54,20 +42,11 @@ function findById(id) {
     .first();
 }
 
-function findTripById(id) {
-  return db('trips')
-    .join('users', 'trips.user_id', 'users.id')
-    .select('trip.id', 'trip.title', 'users.id as user')
-    .where({ user_id: id })
-    .first();
-}
-
 function findPostById(id) {
   return db('posts')
-    .join('users', 'trips.user_id', 'usrs.id')
-    .join('trips', 'posts.trip_id', 'trips.id')
-    .select('trip.id', 'trip.title', 'users.id as user')
-    .where({ trip_id: id })
+    .join('users', 'posts.user_id', '=', 'users.id')
+    .select('posts.*', 'users.id as user')
+    .where({ id })
     .first();
 }
 
@@ -79,14 +58,9 @@ function remove(id) {
     .del();
 }
 
-function removeTrip(id) {
-  return db('trips')
-    .where({ id })
-    .del();
-}
-
 function removePost(id) {
-  return db('trips')
+  return db('posts')
+    .join('users', 'posts.user_id', '=', 'users.id')
     .where({ id })
     .del();
 }

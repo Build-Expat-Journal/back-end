@@ -1,22 +1,20 @@
 const db = require('../database/dbConfig.js');
-const {insert} = require('./users-model.js');
+const {add, find, remove} = require('./users-model.js');
 
 describe('user model', function() {
-    describe('insert()', function() {
+    describe('add()', function() {
 
-        beforeEach(async () => {
-            await db('users').truncate();
-        })
+        beforeEach(async () => {await db('users').truncate();})
 
-        test('should insert user', async function(){
-            await insert({name:'Dobby'});
+        test('should add new user', async function(){
+            await add({name:'Dobby'});
 
             const users = await db('users');
             expect(users).toHaveLength(1);
         });
 
-        test('should insert the given user', async function(){
-            await insert({name:'Jimbo Slice'});
+        test('should add the given user', async function(){
+            await add({name:'Jimbo Slice'});
 
             const users = await db('users');
             expect(users[0].name).toBe('Jimbo Slice');

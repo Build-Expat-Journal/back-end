@@ -6,6 +6,7 @@
 - [Welcome](#welcome)
 - [Routes](#routes)
 - [Tables](#tables)
+- [Contributing](#contributing)
 
 
 
@@ -119,3 +120,7 @@ city_id REFERENCES id IN TABLE cities </br>
 country_id REFERENCES id IN TABLE country </br>
 
 
+
+## Contributing
+
+You are welcomed to contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/workout-tracktor/labspt4-workout-tracker-BE/compare).
