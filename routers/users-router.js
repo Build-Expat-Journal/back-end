@@ -24,14 +24,19 @@ router.get('/', (req, res) => {
 
 router.get('/:id', authenticate, async (req, res) => {
     const {id} = req.params;
-    let user = await db.findById(id)
+    try {
+        let user = await db.findById(id)
 
-    if (user) {
-        user.trips = await tripDb.findTripsByUserId(id)
-        delete user.password;
-        res.status(200).json(user)
-    } else {
-        res.status(404).json({ error: 'User not found' })
+        if (user) {
+            user.trips = await tripDb.findTripsByUserId(id)
+            delete user.password;
+            res.status(200).json(user)
+        } else {
+            res.status(404).json({ error: 'User not found' })
+        }
+    }
+    catch(err) {
+        res.status(500).json(err)
     }
 })
 
