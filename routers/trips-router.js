@@ -7,10 +7,11 @@ const validateTrip = require('../authentication/validate-trip')
 
 // get array of all trips
 router.get('/', async (req, res) => {
-    let trips = await tripDb.findTrips()
-    if (trips) {
+    try {
+        let trips = await tripDb.findTrips()
         res.status(200).json(trips)
-    } else {
+    } 
+    catch(err) {
         res.status(500).json({ error: 'Could not get trips' })
     }
 })

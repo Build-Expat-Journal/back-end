@@ -12,13 +12,15 @@ const authenticate = require('../authentication/authenticate-middleware')
 
 
 
-router.get('/', (req, res) => {
-    db.find()
-    .then(users => {
+router.get('/', async (req, res) => {
+    try {
+        const users = await db.find()
         users.forEach(u => delete u.password)
         res.status(200).json(users)
-    })
-    .catch(err => res.status(500).json({ error: 'Could not get users' }))
+    }
+    catch(err) {
+        res.status(500).json({ error: 'Could not get users' })
+    } 
 })
 
 
@@ -42,34 +44,28 @@ router.get('/:id', authenticate, async (req, res) => {
 
 
 router.post('/register', validateUser, async (req, res) => {
-    let user = req.body
     try {
+        let user = req.body
         const hash = bcrypt.hashSync(user.password, 8)
         user.password = hash
         let success = await db.addUser(user)
-        if (success) {
-            const token = getToken(user.username)
-            const [id] = success;
-            db.findById(id)
-                .then(added => res.status(201).json({
-                    message:`Thanks for registering, ${added.first_name}`, 
-                    token: token,
-                    id: id
-                }))
-                .catch(err => res.status(500).json({ error: 'Could not add user' }))
-        }
+        const token = getToken(user.username)
+        const [id] = success;
+        const added = await db.findById(id)
+        res.status(201).json({
+            message:`Thanks for registering, ${added.first_name}`, 
+            token: token,
+            id: id
+        })
     }
     catch(err) {
         res.status(500).json({ error: 'error adding user'})
-    }
-        
+    }  
 })
 
 router.post('/login', validateUserLogin, async (req, res) => {
     let user = req.body
-    // const validateResult = validateUser(user) 
-
-    // if (validateResult.isSuccessful === true) {
+    try {
         let userToCheck = await db.findByUsername(user.username)
         if (userToCheck && bcrypt.compareSync(user.password, userToCheck.password)) {
             const token = getToken(user.username)
@@ -81,34 +77,40 @@ router.post('/login', validateUserLogin, async (req, res) => {
         } else {
             res.status(401).json({ error: 'Invalid credentials'})
         }
-
-    // } else {
-    //     res.status(400).json({
-    //       message: "Invalid information about the user, see errors for details",
-    //       errors: validateResult.errors
-    //     });
-    //   }
+    }
+    catch (err) {
+        res.status(500).json(err)
+    }
 })
 
 // get a user's trips by user id
 router.get('/:id/trips', async (req, res) => {
     const {id}= req.params;
-    let user = await db.findById(id)
-    let userTrips = await tripDb.findTripsByUserId(id)
-    if (user && userTrips) {
-        if (!userTrips.length) res.status(404).json({ error: 'That user has no trips'})
-        else {
-            // userTrips.map(async t => {
-            //     t.photos = [];
-            //     trip_id = t.id
-            //     let photos = await photosDb.findPhotosByTripId(trip_id)
-            //     photos.map(p => t.photos.push(p))
-            //      return res.status(200).json(userTrips)
-            // }) 
-            return res.status(200).json(userTrips)
-        }
-    } else if (!user) res.status(404).json({ error: 'That user does not exist'})
-    else res.status(500).json({ error: 'Could not get user trips'})
+    try {
+        let user = await db.findById(id)
+        let userTrips = await tripDb.findTripsByUserId(id)
+        if (user && userTrips) {
+            if (!userTrips.length) {
+                res.status(404).json({ error: 'That user has no trips'})
+            }
+            else {
+                    userTrips.map(async (t) => {
+                        t.photos = []
+                        try {
+                            let tripHasPhotos = await photosDb.findPhotosByTripId(t.id)
+                            t.photos = tripHasPhotos
+                        } catch (err) {
+                            t.photos = []
+                        }
+                        res.status(200).json(userTrips)
+                    })
+                    
+            }
+        } else res.status(404).json({ error: 'That user does not exist'})
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Could not get user trips'})
+    } 
 })
 
 
