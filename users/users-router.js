@@ -53,12 +53,10 @@ router.get('/:id/posts', restricted, (req, res) => {
 
 router.get('/:id/posts/:id', restricted, (req, res) => {
   id=req.params.id;
-  // postId=req.params.id;
   db
   .select('posts.*' )
   .from('users')
   .join('posts', 'users.id', '=', 'posts.user_id')
-  // .where('posts.user_id', '=', `${id}`)
   .where('posts.id', '=', `${id}`)
   .then(posts => {
     res.status(200).json(posts)
@@ -99,11 +97,18 @@ router.put('/:id', restricted, (req, res) => {
   });
 });
 
+//Not working
 router.put('/:id/posts/:id', restricted, (req, res) => {
-  id = req.params.id;
+  id = req.body.id;
+  userId = req.body.id;
   postData = req.body;
 
-  db('posts').where({id}).update(postData)
+  db.select('posts.*')
+  .from('users')
+  .join('posts', 'users.id', '=', 'posts.user_id')
+  .where('posts.user_id', '=', `${userId}`)
+  .where('posts.id', '=', `${id}`)
+  .update({postData})
   .then(ids => {
     res.status(201).json({ created: ids[0] });
   })
@@ -131,7 +136,7 @@ router.delete('/:id/posts/:id', restricted, (req, res) => {
 
   db('posts').where({id}).delete()
   .then(ids => {
-    res.status(201).json({ created: ids[0] });
+    res.status(201).json({message: 'This post has been deleted.'});
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to delete post.' });
