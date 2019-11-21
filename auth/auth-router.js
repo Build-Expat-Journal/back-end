@@ -24,7 +24,7 @@ router.post('/register', (req, res) => {
     } else {
       res.status(400).json({message:'Error:', err: validateResults.errors})
     }
-  });
+});
 
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
