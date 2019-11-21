@@ -100,8 +100,8 @@ router.put('/:id', restricted, (req, res) => {
 });
 
 router.put('/:id/posts/:id', restricted, (req, res) => {
-  const postData = req.body;
-  const id = req.params.id;
+  id = req.params.id;
+  postData = req.body;
 
   db('posts').where({id}).update(postData)
   .then(ids => {
