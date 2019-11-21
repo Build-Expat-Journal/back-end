@@ -2,16 +2,15 @@ module.exports={
     validatePost
 }
 
-function validatePost(post){
+function validatePost(postData){
     let errors = [];
 
-    if (post.user_id === null){
+    if (postData.user_id === null){
         errors.push('Please add user_id.')
     }
-    if (post.content === null && post.image === null){
+    if (postData.content === null && postData.image === null){
         errors.push('Post cannot be empty. Add a comment or picture.')
     }
-
 
     return {
         isSuccessful: errors.length > 0 ? false:true,
