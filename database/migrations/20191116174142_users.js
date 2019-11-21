@@ -1,6 +1,45 @@
 exports.up = function(knex) {
     return knex.schema
   
+  .createTable('country', tbl=> {
+      tbl.increments('id').primary();
+      tbl.string('name').notNullable();
+  })
+
+  .createTable('cities', tbl=> {
+      tbl.increments('id').primary();
+      tbl.string('name').notNullable();
+      tbl
+        .integer('country_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('country')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+  })
+
+  .createTable('locations', tbl => {
+      tbl.increments('id').primary();
+      tbl
+        .integer('country_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('country')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+
+      tbl
+        .integer('city_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('cities')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+  })
+  
   .createTable('users', users=> {
       users.increments('id').primary();
       users.string('username', 128).notNullable().unique();
@@ -41,11 +80,14 @@ exports.up = function(knex) {
           .onUpdate('CASCADE');    
         tbl.string('image');
   })
-  
+
   };
   
   exports.down = function(knex) {
       return knex.schema
       .dropTableIfExists('posts')
       .dropTableIfExists('users')
+      .dropTableIfExists('locations')
+      .dropTableIfExists('cities')
+      .dropTableIfExists('country')
   };
