@@ -1,7 +1,5 @@
 
 exports.seed = function(knex) {
-  return knex('country').del()
-    .then(function () {
       return knex('country').insert([
         {name: 'United States'}, 
         {name: 'Mexico'}, //2
@@ -15,5 +13,4 @@ exports.seed = function(knex) {
         {name: 'Australia'},  //10
         {name: 'France'},
       ]);
-    });
 };

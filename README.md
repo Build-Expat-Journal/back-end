@@ -50,9 +50,6 @@ POST:<br>
 PUT:<br>
     /:id
     Edits a specific `user`'s information.
-    
-    /:id/posts/:id
-    Edits a specific `post`.
 
 
 DELETE:<br>

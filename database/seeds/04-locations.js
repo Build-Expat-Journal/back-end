@@ -1,7 +1,5 @@
 
 exports.seed = function(knex, Promise) {
-  return knex('locations').del()
-    .then(function () {
       return knex('locations').insert([
         {country_id: 1, city_id: 1},
         {country_id: 1, city_id: 2}, //2
@@ -18,5 +16,4 @@ exports.seed = function(knex, Promise) {
         {country_id: 10, city_id: 13},
         {country_id: 11, city_id: 14},
       ]);
-    });
 };

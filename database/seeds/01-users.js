@@ -1,7 +1,5 @@
 
-exports.seed = function(knex) {
-  return knex('users').del()
-    .then(function () {
+exports.seed = function(knex, Promise) {
       return knex('users').insert([
         {
           first_name: 'user', 
@@ -33,5 +31,4 @@ exports.seed = function(knex) {
           profile_img: 'https://images.unsplash.com/photo-1466838931486-92f3b5ff31a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1187&q=80'
         },
       ]);
-    });
 };

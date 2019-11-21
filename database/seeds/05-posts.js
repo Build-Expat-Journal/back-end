@@ -1,7 +1,5 @@
 
 exports.seed = function(knex) {
-  return knex('posts').del()
-    .then(function () {
       return knex('posts').insert([
         //USER 1:
         {
@@ -115,5 +113,4 @@ exports.seed = function(knex) {
         },
 
       ]);
-    });
 };
