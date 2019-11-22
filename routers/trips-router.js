@@ -7,11 +7,10 @@ const validateTrip = require('../authentication/validate-trip')
 
 // get array of all trips
 router.get('/', async (req, res) => {
-    try {
-        let trips = await tripDb.findTrips()
+    let trips = await tripDb.findTrips()
+    if (trips) {
         res.status(200).json(trips)
-    } 
-    catch(err) {
+    } else {
         res.status(500).json({ error: 'Could not get trips' })
     }
 })
@@ -67,8 +66,9 @@ router.post('/', validateTrip, authenticate, async (req, res) => {
 router.put('/:id', authenticate, async(req, res) => {
     const {id} = req.params
     const changes = req.body;
-try {
-    let toUpdate = await tripDb.findTripById(id)
+
+    try {
+        let toUpdate = await tripDb.findTripById(id)
     if (toUpdate) {
         let updatedTrip = await tripDb.updateTrip(id, changes)
         if (updatedTrip) {
@@ -78,10 +78,9 @@ try {
         else res.status(500).json({ error: 'Could not update trip'})
     }
     else res.status(404).json({ error: 'That trip does not exist' })
-} catch(err) {
-    res.status(500).json(err)
-}
-    
+    } catch(err) {
+        res.status(500).json(err)
+    }
 })
 // needs authenticate readded
 router.delete('/:id', async (req, res) => {
