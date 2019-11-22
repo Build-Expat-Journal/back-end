@@ -2,7 +2,6 @@ const router = require('express').Router();
 const Posts = require('./users-model.js');
 const db = require('../database/dbConfig.js');
 const restricted = require('../auth/restricted-middleware.js');
-const {validatePost} = require('../posts/posts-helper.js/index.js');
 
 
 //----->GET

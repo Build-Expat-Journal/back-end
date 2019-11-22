@@ -24,49 +24,49 @@ Two separate databases were built for this project as part of a competition betw
 
 GET: <br>
     /api/users 
-    returns all `users`.
+    _returns all `users`._
 
     /api/users/:id
-    returns specific `user`.
+   _returns specific `user`._
 
     /api/users/:id/posts
-    returns all of a user's `posts`. 
+    _returns all of a user's `posts`._
 
     /api/users/:id/posts/:id
-    returns a user's specific `posts`. 
+    _returns a user's specific `posts`._ 
 
     /api/posts
-    returns all users' posts
+    _returns all users' posts._
 
     /api/posts/city:id
-    returns posts by city 
+    _returns posts by city._
 
     /api/posts/country/:id
-    returns posts by country
+    _returns posts by country._
 
 
 POST:<br>
     /auth/register
-    Creates new `user`.
+    _Creates new `user`._
 
     /auth/login
-    Login existing `user`.
+    _Login existing `user`._
 
     /api/users/:id/posts
-    Adds new `post`.
+    _Adds new `post`._
 
 
 PUT:<br>
     /:id
-    Edits a specific `user`'s information.
+    _Edits a specific `user`'s information._
 
 
 DELETE:<br>
     /:id
-    Deletes a specific `user`.
+    _Deletes a specific `user`._
 
     /:id/posts/:id
-    Deletes a user's specific `post`.
+    _Deletes a user's specific `post`._
 
 
 ## Tables
