@@ -3,7 +3,6 @@ const Posts = require('./users-model.js');
 const db = require('../database/dbConfig.js');
 const restricted = require('../auth/restricted-middleware.js');
 
-
 //----->GET
 //return all posts
 router.get('/', restricted, (req, res) => {
