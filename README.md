@@ -35,6 +35,15 @@ GET: <br>
     /api/users/:id/posts/:id
     returns a user's specific `posts`. 
 
+    /api/posts
+    returns all users' posts
+
+    /api/posts/city:id
+    returns posts by city 
+
+    /api/posts/country/:id
+    returns posts by country
+
 
 POST:<br>
     /auth/register
