@@ -25,19 +25,18 @@ function findPostById(id) {
     .first();
 }
 
-function findPostsByCity(city) {
+function findPostsByCity(id) {
     return db('posts')
       .join('cities', 'posts.city_id', '=', 'cities.id')
       .select('posts.*', 'cities.name as city')
-      .where({ name: city })
-      .first();
+      .where({ city_id: id })
 }
 
-function findPostsByCountry(country) {
+function findPostsByCountry(id) {
     return db('posts')
-      .join('countries', 'posts.country_id', '=', 'countries.id')
-      .select('posts.*', 'countries.name as country')
-      .where({ name: country })
-      .first();
+      .join('cities', 'posts.city_id', '=', 'cities.id')
+      .join('country', 'cities.country_id', '=', 'country.id')
+      .select('posts.*', 'country.name as country')
+      .where( {country_id: id})
 }
 

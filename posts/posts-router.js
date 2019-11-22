@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Posts = require('./users-model.js');
+const Posts = require('./posts-model.js');
 const db = require('../database/dbConfig.js');
 const restricted = require('../auth/restricted-middleware.js');
 
@@ -19,8 +19,9 @@ router.get('/', restricted, (req, res) => {
 
 //get posts by city
 router.get('/city/:id', restricted, (req, res) => {
+    id = req.params.id;
     Posts
-    .findPostsByCity()
+    .findPostsByCity(id)
     .then(posts => {
       res.json(posts);
     })
@@ -32,8 +33,9 @@ router.get('/city/:id', restricted, (req, res) => {
 
 //get posts by country
 router.get('/country/:id', restricted, (req, res) => {
+    id = req.params.id;
     Posts
-    .findPostsByCountry()
+    .findPostsByCountry(id)
     .then(posts => {
       res.json(posts);
     })
@@ -42,5 +44,7 @@ router.get('/country/:id', restricted, (req, res) => {
       res.status(500).json({message: 'Request failed to get posts.'});
     });
 });
+
+module.exports = router;
 
   
