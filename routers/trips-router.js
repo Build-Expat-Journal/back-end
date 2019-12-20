@@ -46,7 +46,7 @@ router.get('/:id/photos', async (req, res) => {
     }
 })
 
-router.post('/', validateTrip, authenticate, async (req, res) => {
+router.post('/', validateTrip, async (req, res) => {
     const trip = req.body;
     let user = await db.findById(trip.user_id)
 
