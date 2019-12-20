@@ -5,6 +5,7 @@ exports.up = function(knex) {
       tbl.increments()
       tbl.string('first_name')
       tbl.string('last_name')
+      tbl.string('email')
       tbl.string('username', 128)
         .notNullable()
         .unique();

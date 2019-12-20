@@ -65,7 +65,7 @@ router.post('/', validateTrip, authenticate, async (req, res) => {
 
 router.put('/:id', authenticate, async(req, res) => {
     const {id} = req.params
-    const changes = req.body;
+    const changes = req.body; 
 
     try {
         let toUpdate = await tripDb.findTripById(id)
