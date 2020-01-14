@@ -68,7 +68,7 @@ router.post('/login', validateUserLogin, async (req, res) => {
     try {
         let userToCheck = await db.findByUsername(user.username)
         if (userToCheck && bcrypt.compareSync(user.password, userToCheck.password)) {
-            const token = getToken(user.username)
+            const token = getToken(user.username, userToCheck.id)
             res.status(200).json({
                 message: `Welcome ${user.username}! have a token...`, 
                 token,

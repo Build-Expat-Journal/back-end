@@ -4,7 +4,7 @@ const tripsRouter = require('./trips-router')
 const photosRouter = require('./photos-router')
 const express = require('express')
 
-
+const authenticate = require('../authentication/authenticate-middleware')
 
 router.get('/', (req, res) => {
     res.send({ message: 'hi from api!'})
@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.use('/users', usersRouter)
 router.use('/trips', tripsRouter)
-router.use('/photos', photosRouter)
+router.use('/photos', authenticate, photosRouter)
 
 
 module.exports = router;
