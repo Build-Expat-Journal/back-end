@@ -64,7 +64,7 @@ router.post('/', authenticate, authenticatePost, validateTrip, async (req, res) 
     }
 })
 
-router.put('/:id', authenticate, async(req, res) => {
+router.put('/:id', authenticate, authenticatePost, async(req, res) => {
     const {id} = req.params
     const changes = req.body; 
 
@@ -84,11 +84,16 @@ router.put('/:id', authenticate, async(req, res) => {
     }
 })
 // needs authenticate readded
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticate, async (req, res) => {
     const {id} = req.params
     try {
         let trip = await tripDb.findTripById(id)
-    if (trip !== -1) {
+        console.log(trip)
+        console.log(req.decodedJwt)
+        if (trip.user_id !== req.decodedJwt.user_id) {
+            res.status(401).json({ error: 'Not your trip'})
+        }
+        else if (trip !== -1) {
         let deleted = await tripDb.deleteTrip(id)
         if (deleted === 1) res.status(200).json({ message: `Deleted trip with id ${id}`})
        else res.status(500).json({ error: 'Could not delete trip'})
