@@ -53,7 +53,7 @@ router.post('/register', validateUser, async (req, res) => {
         const [id] = success;
         const added = await db.findById(id)
         res.status(201).json({
-            message:`Thanks for registering, ${added.first_name}`, 
+            message:`Thanks for registering, ${added.username}`, 
             token: token,
             id: id
         })
