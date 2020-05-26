@@ -21,7 +21,7 @@ POST users/register
    - returns an object with a welcome message, user id and token
 
         {
-            "message": "Thanks for registering, first_name",
+            "message": "Thanks for registering, <username>",
             "token": "abcdefg",
             "id": 8
         }
